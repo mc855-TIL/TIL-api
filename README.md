@@ -1,10 +1,10 @@
 # API do projeto de Troca de Insumos de Laboratórios (TIL)
 
 ## Integrantes do projeto:
-Filipe Cavalheiro Marques       RA: 148524
-Leandro Nascimento              RA: 171855 
-João Victor Flores da Costa     RA: 199818 
-Leonardo Yukio Koike            RA: 201332 
+Filipe Cavalheiro Marques       RA: 148524\
+Leandro Nascimento              RA: 171855\
+João Victor Flores da Costa     RA: 199818\ 
+Leonardo Yukio Koike            RA: 201332\ 
 Lucas Silva Lopes do Carmo      RA: 202110
 
 ## Sobre o grupo:

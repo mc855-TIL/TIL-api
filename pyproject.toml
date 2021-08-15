@@ -8,6 +8,7 @@ authors = ["leokoike <leokoike@gmail.com>"]
 python = "^3.9"
 fastapi = "^0.68.0"
 uvicorn = {extras = ["standard"], version = "^0.15.0"}
+black = "^21.7b0"
 
 [tool.poetry.dev-dependencies]
 
