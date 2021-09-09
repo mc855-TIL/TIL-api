@@ -1,3 +1,21 @@
+# Estudo do modelo de oferta do Solidariedade
+
+- Tabela Pedido/Oferta:
+    - Quantidade
+    - Tipo
+    - ID Pesquisador Proprietário
+    - Data de validade 
+
+- Tabela Pesquisador:
+    - ID
+    - Instituição
+    - Nome pesquisador
+    - email
+
+- Lista histórico de status
+    - Criado (Pedido) timestamp
+    - Atendido timestamp
+
 # Notas Meet 24/08 Equipe solidariedade
 ## apresentacao
 - eles sao da TI da fcm
