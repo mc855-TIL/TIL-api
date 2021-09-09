@@ -1,18 +1,25 @@
 # Estudo do modelo de oferta do Solidariedade
 
 - Tabela Pedido/Oferta:
+    - ID oferta/pedido
+    - ID produto
+    - ID Pesquisador Proprietário
+    - ID histórico status
+
+- Tabela Produto:
+    - ID produto
     - Quantidade
     - Tipo
-    - ID Pesquisador Proprietário
-    - Data de validade 
+    - Data de validade
 
 - Tabela Pesquisador:
-    - ID
+    - ID pesquisador
     - Instituição
     - Nome pesquisador
     - email
 
-- Lista histórico de status
+- Lista histórico de status:
+    - ID histórico
     - Criado (Pedido) timestamp
     - Atendido timestamp
 
