@@ -1,6 +1,6 @@
 # Estudo do modelo de oferta do Solidariedade
 
-- Tabela Pedido/Oferta:
+- Tabela Pedido/Oferta - podemos chamar só de ordem:
     - ID oferta/pedido
     - ID produto
     - ID Pesquisador Proprietário
@@ -27,6 +27,7 @@
 ## apresentacao
 - eles sao da TI da fcm
 ## Histórico
+
 - Prof Gondijo entre a pos grad
 na FCM na medicina
 - Levou pra Capes.
