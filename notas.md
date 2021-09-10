@@ -23,6 +23,10 @@
     - Criado (Pedido) timestamp
     - Atendido timestamp
 
+# Pastas
+- Serviço (regras de negocio)
+- BD repositrios...
+
 # Notas Meet 24/08 Equipe solidariedade
 ## apresentacao
 - eles sao da TI da fcm
