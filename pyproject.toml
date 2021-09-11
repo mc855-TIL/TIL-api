@@ -1,11 +1,11 @@
 [tool.poetry]
 name = "til-api"
 version = "0.1.0"
-description = ""
-authors = ["leokoike <leokoike@gmail.com>"]
+description = "Projeto mc855"
+authors = ["Leonardo Koike <leokoike@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.8"
 fastapi = "^0.68.1"
 uvicorn = "^0.15.0"
 black = "^21.8b0"
