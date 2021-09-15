@@ -1,5 +1,6 @@
 import os
 from distutils.util import strtobool
+from urllib.parse import quote
 
 from pydantic import BaseSettings
 
@@ -9,12 +10,14 @@ class Base(BaseSettings):
     QUANTIDADE_PAGINA: int = 20
 
     # database info
-    DATABASE_USERNAME: str
-    DATABASE_PASSWORD: str
-    DATABASE_URL: str
-    DATABASE_DBNAME: str
-    SQLALCHEMY_DATABASE_URL: str
-    SQLALCHEMY_ECHO: str
+    DATABASE_USERNAME: str = quote(os.environ["DATABASE_USERNAME"])
+    DATABASE_PASSWORD: str = quote(os.environ["DATABASE_PASSWORD"])
+    DATABASE_URL: str = os.environ["DATABASE_URL"]
+    DATABASE_DBNAME: str = os.environ["DATABASE_DBNAME"]
+    SQLALCHEMY_DATABASE_URL: str = (
+        f"postgres://{DATABASE_USERNAME}:{DATABASE_PASSWORD}@{DATABASE_URL}/{DATABASE_DBNAME}"
+    )
+    SQLALCHEMY_ECHO: str = strtobool(os.getenv("SQLALCHEMY_ECHO", "False"))
 
 
 class DevSettings(Base):
