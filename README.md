@@ -23,7 +23,7 @@ poetry install
 ```
 
 ## Execução
-No seu prompt de comando ou terminal basta executar os seguintes comandos:
+No seu prompt de comando ou terminal, basta executar os seguintes comandos:
 
     export $(xargs <.env)\
     make run
