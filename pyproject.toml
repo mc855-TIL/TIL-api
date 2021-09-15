@@ -10,6 +10,7 @@ fastapi = "^0.68.1"
 uvicorn = "^0.15.0"
 black = "^21.8b0"
 SQLAlchemy = "^1.4.23"
+alembic = "^1.7.1"
 
 [tool.poetry.dev-dependencies]
 
