@@ -84,3 +84,9 @@ Use multiple Pydantic models and inherit freely for each case.
 
 You don't need to have a single data model per entity if that entity must be able to have different "states". As the case with the user "entity" with a state including password, password_hash and no password.
 
+## Response Status Code 
+
+@app.post("/items/", status_code=201)
+async def create_item(name: str):
+    return {"name": name}
+
