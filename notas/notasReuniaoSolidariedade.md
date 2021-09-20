@@ -1,3 +1,9 @@
+# Notas gerais
+
+# Reunião sprint 2 - 16/09
+
+- LGPD Lei Geral de Proteção de dados
+- Ter cuidado com a exposição dos dados
 
 
 # Notas Meet 24/08 Equipe solidariedade
