@@ -1,5 +1,9 @@
 # Notas gerais
 
+# Reuniao solid 2 - 21/09
+
+
+
 # Reunião sprint 2 - 16/09
 
 - LGPD Lei Geral de Proteção de dados
