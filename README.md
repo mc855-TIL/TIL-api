@@ -15,7 +15,7 @@ No diretório root desse projeto, basta executar os seguintes comandos:
 
 ```python
 #criação e ativação da ambiente virtual
-python -m venv mc855 & ./mc855/bin/activate
+python -m venv mc855 & source mc855/bin/activate
 #instalar o gerenciador de pacotes poetry
 pip install poetry
 #instalar os pacotes
