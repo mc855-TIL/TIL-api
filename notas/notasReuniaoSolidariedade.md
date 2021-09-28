@@ -2,7 +2,8 @@
 
 # Reuniao solid 2 - 21/09
 
-
+ideia de por dados do qtas contribuições o pesquisador
+já realizou e a sua universidade também
 
 # Reunião sprint 2 - 16/09
 
