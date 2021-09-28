@@ -1,5 +1,6 @@
 from typing import List
 
+import paginate
 from app.api.response.ordem_response import ListaOrdemResponse
 from app.repositorio import OrdemRepositorio
 
@@ -10,9 +11,45 @@ class OrdemServico:
 
     def listar_ordens(
         self,
+        pagina: int,
+        limite: int,
     ) -> ListaOrdemResponse:
-        ordens = self.ordem_repositorio.listar_ordens()
-        pass
+        """Listagem das ordens de insumos
 
-    def buscar_ofertas(self, pesquisa: str) -> ListaOrdemResponse:
-        pass
+        Args:
+            pagina (int): Pagina de dados.
+            limite (int): Limite de dados por página.
+
+        Returns:
+            ListaOrdemResponse: Listagem de ordens paginada
+        """
+        ordens = self.ordem_repositorio.listar_ordens(
+            pagina=pagina,
+            limite=limite,
+        )
+
+        return ListaOrdemResponse.parse_obj(ordens.__dict__)
+
+    def buscar_ofertas(
+        self,
+        pesquisa: str,
+        pagina: int,
+        limite: int,
+    ) -> ListaOrdemResponse:
+        """Listagem das ordens de insumos de acordo com a pesquisa
+
+        Args:
+            pesquisa (str): campo de pesquisa.
+            pagina (int): Pagina de dados.
+            limite (int): Limite de dados por página.
+
+        Returns:
+            ListaOrdemResponse: Listagem de ordens paginada
+        """
+
+        ordens = self.ordem_repositorio.buscar_ordens(
+            pesquisa=pesquisa,
+            pagina=pagina,
+            limite=limite,
+        )
+        return ListaOrdemResponse.parse_obj(ordens.__dict__)

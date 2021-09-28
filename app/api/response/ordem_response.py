@@ -11,9 +11,9 @@ class OrdemResponse(BaseResponse):
     descricao: str
     data_publicacao: date
     data_validade: Optional[date]
-    tipo_acao: str
-    tipo_item: str
-    nome_instituto: str
+    acao: str
+    tipo: str
+    nomeInst: str
     emprestimo: bool
 
 
