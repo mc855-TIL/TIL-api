@@ -1,1 +1,1 @@
-from .oferta_repositorio import OfertaRepositorio  # noqa
+from .ordem_repositorio import OrdemRepositorio  # noqa

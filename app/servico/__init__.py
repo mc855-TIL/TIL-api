@@ -1,1 +1,1 @@
-from .oferta_servico import OfertaServico  # noqa
+from .ordem_servico import OrdemServico  # noqa

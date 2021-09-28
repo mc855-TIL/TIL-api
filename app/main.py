@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
-from app.api.route.oferta_route import app as oferta_app
+from app.api.route.ordem_route import app as ordem_app
 
 app = FastAPI(
     title="Projeto MC855 - API Troca de insumos de laboratório.",
@@ -18,4 +18,4 @@ app.add_middleware(
     expose_headers=["*"],
 )
 
-app.include_router(oferta_app, tags=["Ofertas"])
+app.include_router(ordem_app, tags=["Ordens"])

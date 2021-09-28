@@ -10,14 +10,13 @@ class Base(BaseSettings):
     QUANTIDADE_PAGINA: int = 20
 
     # database info
-    DATABASE_USERNAME: str = quote(os.environ["DATABASE_USERNAME"])
-    DATABASE_PASSWORD: str = quote(os.environ["DATABASE_PASSWORD"])
-    DATABASE_URL: str = os.environ["DATABASE_URL"]
-    DATABASE_DBNAME: str = os.environ["DATABASE_DBNAME"]
-    SQLALCHEMY_DATABASE_URL: str = (
-        f"postgresql://{DATABASE_USERNAME}:{DATABASE_PASSWORD}@{DATABASE_URL}/{DATABASE_DBNAME}"
-    )
-    SQLALCHEMY_ECHO: str = strtobool(os.getenv("SQLALCHEMY_ECHO", "False"))
+    # DATABASE_USERNAME: str = quote(os.environ["DATABASE_USERNAME"])
+    # DATABASE_PASSWORD: str = quote(os.environ["DATABASE_PASSWORD"])
+    # DATABASE_URL: str = os.environ["DATABASE_URL"]
+    # DATABASE_DBNAME: str = os.environ["DATABASE_DBNAME"]
+
+    SQLALCHEMY_DATABASE_URL: str = "sqlite:///./database.db"
+    SQLALCHEMY_ECHO: bool = strtobool(os.getenv("SQLALCHEMY_ECHO", "false"))
 
 
 class DevSettings(Base):
