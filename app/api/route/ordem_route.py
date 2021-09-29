@@ -2,7 +2,7 @@ from typing import Optional
 
 from app.api.response.ordem_response import ListaOrdemResponse
 from app.config.settings import settings
-from app.dependencia import get_ordem_servico
+from app.container import get_ordem_servico
 from app.servico import OrdemServico
 from fastapi import APIRouter, Depends
 
