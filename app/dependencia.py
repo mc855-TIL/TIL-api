@@ -1,7 +1,7 @@
 from fastapi import Depends
 from sqlalchemy.orm.session import Session
 
-from app.config.connection import get_session
+from app.config.conexao import get_session
 from app.repositorio import OrdemRepositorio
 from app.servico import OrdemServico
 
