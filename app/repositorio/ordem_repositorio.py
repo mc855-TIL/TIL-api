@@ -1,6 +1,4 @@
-from typing import List
-
-from app.modelo.postgres.ordem_modelo import Ordem
+from app.modelo.sqlite.ordem_modelo import Ordem
 from paginate_sqlalchemy import SqlalchemyOrmPage
 from sqlalchemy import or_
 from sqlalchemy.orm.session import Session

@@ -1,6 +1,6 @@
 from logging.config import fileConfig
 
-from app.config.connection import Base
+from config.connection import Base
 from sqlalchemy import engine_from_config, pool
 
 from alembic import context
@@ -56,6 +56,7 @@ def run_migrations_online():
     and associate a connection with the context.
 
     """
+    breakpoint()
     connectable = engine_from_config(
         config.get_section(config.config_ini_section),
         prefix="sqlalchemy.",
