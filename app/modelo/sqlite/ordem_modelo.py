@@ -1,5 +1,5 @@
 import sqlalchemy as sa
-from app.config.connection import Base
+from app.config.conexao import Base
 
 
 class Ordem(Base):

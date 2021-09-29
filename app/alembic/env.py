@@ -1,6 +1,16 @@
+import sys
+from pathlib import Path
+
+sys.path.insert(
+    0,
+    str(Path(__file__).parent.parent.parent),
+)  # noqa
+
 from logging.config import fileConfig
 
-from app.config.connection import Base
+from app.config.conexao import Base
+from app.config.settings import settings
+from app.modelo.sqlite import *
 from sqlalchemy import engine_from_config, pool
 
 from alembic import context
@@ -8,6 +18,7 @@ from alembic import context
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
+config.set_main_option("sqlalchemy.url", settings.SQLALCHEMY_DATABASE_URL.replace("%", "%%"))
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
