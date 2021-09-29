@@ -1,6 +1,6 @@
 from logging.config import fileConfig
 
-from config.connection import Base
+from config.conexao import Base
 from sqlalchemy import engine_from_config, pool
 
 from alembic import context
