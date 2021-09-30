@@ -15,7 +15,14 @@ class OrdemRepositorio:
         limite: int,
     ) -> SqlalchemyOrmPage:
 
-        consulta = self.sessao.query(Ordem).all()
+        consulta = self.sessao.query(Ordem).with_entities(
+            Ordem.id,
+            Ordem.tipo,
+            Ordem.item,
+            Ordem.nomeInst,
+            Ordem.areaConhecimento,
+            Ordem.emprestimo,
+        )
 
         return SqlalchemyOrmPage(consulta, page=pagina, items_per_page=limite)
 
@@ -26,7 +33,14 @@ class OrdemRepositorio:
         limite: int,
     ) -> SqlalchemyOrmPage:
 
-        consulta = self.sessao.query(Ordem)
+        consulta = self.sessao.query(Ordem).with_entities(
+            Ordem.id,
+            Ordem.tipo,
+            Ordem.item,
+            Ordem.nomeInst,
+            Ordem.areaConhecimento,
+            Ordem.emprestimo,
+        )
 
         if pesquisa:
             consulta = consulta.filter(

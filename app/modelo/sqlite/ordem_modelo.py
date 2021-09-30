@@ -12,5 +12,7 @@ class Ordem(Base):
     tipo = sa.Column(sa.String)
     data_publicacao = sa.Column(sa.Date)
     data_validade = sa.Column(sa.Date, nullable=True)
-    nomeInst = sa.Column(sa.Date)
+    nomeInst = sa.Column(sa.String)
     emprestimo = sa.Column(sa.Boolean)
+    areaConhecimento = sa.Column(sa.String)
+    contato = sa.Column(sa.String)

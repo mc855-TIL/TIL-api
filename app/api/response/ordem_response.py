@@ -7,14 +7,12 @@ from . import BaseResponse, PaginacaoResponse
 
 
 class OrdemResponse(BaseResponse):
+    id: int
     item: str
-    descricao: str
-    data_publicacao: date
-    data_validade: Optional[date]
-    acao: str
     tipo: str
     nomeInst: str
     emprestimo: bool
+    areaConhecimento: str
 
 
 class ListaOrdemResponse(PaginacaoResponse):

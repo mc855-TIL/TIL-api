@@ -26,7 +26,7 @@ def upgrade():
         sa.Column("tipo", sa.String(), nullable=True),
         sa.Column("data_publicacao", sa.Date(), nullable=True),
         sa.Column("data_validade", sa.Date(), nullable=True),
-        sa.Column("nomeInst", sa.Date(), nullable=True),
+        sa.Column("nomeInst", sa.String(), nullable=True),
         sa.Column("emprestimo", sa.Boolean(), nullable=True),
         sa.PrimaryKeyConstraint("id", name=op.f("pk_ordem")),
     )

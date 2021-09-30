@@ -1,6 +1,5 @@
 from typing import List
 
-import paginate
 from app.api.response.ordem_response import ListaOrdemResponse
 from app.repositorio import OrdemRepositorio
 
@@ -30,7 +29,7 @@ class OrdemServico:
 
         return ListaOrdemResponse.parse_obj(ordens.__dict__)
 
-    def buscar_ofertas(
+    def buscar_ordens(
         self,
         pesquisa: str,
         pagina: int,
