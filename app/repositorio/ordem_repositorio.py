@@ -46,7 +46,7 @@ class OrdemRepositorio:
             consulta = consulta.filter(
                 or_(
                     Ordem.item.ilike(f"%{pesquisa}%"),
-                    Ordem.descricao.ilike(f"%{pesquisa}%"),
+                    Ordem.nomeInst.ilike(f"%{pesquisa}%"),
                 )
             )
 
