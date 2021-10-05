@@ -51,3 +51,21 @@ class OrdemRepositorio:
             )
 
         return SqlalchemyOrmPage(consulta, page=pagina, items_per_page=limite)
+
+
+    def visualizar_ordem(
+        self,
+        id_ordem: int,
+    ) -> SqlalchemyOrmPage:
+
+        consulta = self.sessao.query(Ordem).with_entities(
+            Ordem.id,
+            Ordem.tipo,
+            Ordem.item,
+            Ordem.nomeInst,
+            Ordem.areaConhecimento,
+            Ordem.emprestimo,
+        )
+        consulta = consulta.filter_by(id=id_ordem)
+
+        return SqlalchemyOrmPage(consulta,)

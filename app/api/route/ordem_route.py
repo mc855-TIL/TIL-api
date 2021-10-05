@@ -1,6 +1,6 @@
 from typing import Optional
 
-from app.api.response.ordem_response import ListaOrdemResponse
+from app.api.response.ordem_response import ListaOrdemResponse, OrdemResponse
 from app.config.settings import settings
 from app.container import get_ordem_servico
 from app.servico import OrdemServico
@@ -47,3 +47,22 @@ def buscar_ordens(
         limite (int, optional): Limite de dados por página.
     """
     return servico.buscar_ordens(pesquisa=pesquisa, pagina=pagina, limite=limite)
+
+@app.get(
+    '/ordens/{id_ordem}',
+    response_model=OrdemResponse,
+    summary="Visualização de ordem através do ID",
+    )
+async def visualizar_ordem(
+    id_ordem: int,
+    servico: OrdemServico = Depends(get_ordem_servico),
+):
+    """
+    Visualiza apenas uma ordem. Recupera os dados através da ID
+    (Método para usuário anônimo do site)
+    Args:
+        id_ordem (int): ID da ordem requisitada
+    """
+    return se
+
+
