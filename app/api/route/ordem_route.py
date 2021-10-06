@@ -15,6 +15,8 @@ app = APIRouter()
     summary="Lista de ordens de insumos.",
 )
 def listar_ordens(
+    pesquisa: Optional[str],
+    nomeInst: Optional[Enum],
     servico: OrdemServico = Depends(get_ordem_servico),
     pagina: Optional[int] = 1,
     limite: Optional[int] = settings.QUANTIDADE_PAGINA,
@@ -22,28 +24,8 @@ def listar_ordens(
     """Listagem das ordens de insumos registradas
 
     Args:
-        pagina (int, optional): Pagina de dados.
-        limite (int, optional): Limite de dados por página.
-    """
-    return servico.listar_ordens(pagina=pagina, limite=limite)
-
-
-@app.get(
-    "/ordens/{pesquisa}",
-    response_model=ListaOrdemResponse,
-    summary="Lista de ordens de insumos com base em uma pesquisa.",
-)
-def buscar_ordens(
-    pesquisa: Optional[str],
-    servico: OrdemServico = Depends(get_ordem_servico),
-    pagina: Optional[int] = 1,
-    limite: Optional[int] = settings.QUANTIDADE_PAGINA,
-):
-    """Listagem das ordens de insumos registradas de acordo com a pesquisa.
-
-    Args:
         pesquisa (str, optional): Campo para pesquisa.
         pagina (int, optional): Pagina de dados.
         limite (int, optional): Limite de dados por página.
     """
-    return servico.buscar_ordens(pesquisa=pesquisa, pagina=pagina, limite=limite)
+    return servico.listar_ordens(pagina=pagina, limite=limite)
