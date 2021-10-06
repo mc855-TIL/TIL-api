@@ -29,6 +29,28 @@ def listar_ordens(
 
 
 @app.get(
+    '/ordens/{id_ordem}',
+    response_model=VisualizaOrdemResponse,
+    summary="Visualização de ordem através do ID",
+    )
+def visualizar_ordem(
+    id_ordem: int,
+    auth: Optional[bool] = False,
+    servico: OrdemServico = Depends(get_ordem_servico),
+):
+    """
+    Visualiza apenas uma ordem. Recupera os dados através da ID
+    (Método para usuário anônimo do site)
+    Args:
+        id_ordem (int): ID da ordem requisitada
+        auth(bool): Flag que diz se o user está autenticado ou não
+        True = autenticado; False = não autenticado
+    """
+    return servico.visualizar_ordem(id_ordem=id_ordem, auth=auth)
+
+
+
+@app.get(
     "/ordens/{pesquisa}",
     response_model=ListaOrdemResponse,
     summary="Lista de ordens de insumos com base em uma pesquisa.",
@@ -47,23 +69,4 @@ def buscar_ordens(
         limite (int, optional): Limite de dados por página.
     """
     return servico.buscar_ordens(pesquisa=pesquisa, pagina=pagina, limite=limite)
-
-@app.get(
-    '/ordens/',
-    response_model=VisualizaOrdemResponse,
-    summary="Visualização de ordem através do ID",
-    )
-def visualizar_ordem(
-    id_ordem: int,
-    auth: Optional[bool] = False,
-    servico: OrdemServico = Depends(get_ordem_servico),
-):
-    """
-    Visualiza apenas uma ordem. Recupera os dados através da ID
-    (Método para usuário anônimo do site)
-    Args:
-        id_ordem (int): ID da ordem requisitada
-    """
-    return servico.visualizar_ordem(id_ordem=id_ordem, auth=auth)
-
 

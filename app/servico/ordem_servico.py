@@ -68,17 +68,40 @@ class OrdemServico:
         (Método para usuário anônimo do site)
         Args:
         id_ordem (int): ID da ordem requisitada
-
+        auth(bool): Flag que diz se o user está autenticado ou não
+        True = autenticado; False = não autenticado
         Returns:
-            OrdemResponse: Ordem buscada
+            VisualizaOrdemResponse: Detalhes da ordem buscada
         """
-
-        ordem = self.ordem_repositorio.visualizar_ordem(
-            id_ordem=id_ordem,
-            auth=auth
-        )
-        print('Servico ordem = ', ordem)
-        print(ordem.dataPublicacao.year)
-        print(ordem.dataPublicacao.month)
-        print(ordem.dataPublicacao.day)
-        return ordem
+        if auth:
+            ordem = self.ordem_repositorio.visualizar_ordem_autenticado(
+                id_ordem=id_ordem,
+            )
+            response = VisualizaOrdemResponse(
+                id = ordem[0],
+                acao = ordem[1],
+                item = ordem[2],
+                descricao = ordem[3],
+                nomeInst = ordem[4],
+                areaConhecimento = ordem[5],
+                emprestimo = ordem[6],
+                dataPublicacao = ordem[7],
+                dataValidade = ordem[8],
+                contato = ordem[9]
+            )
+        else:
+            ordem = self.ordem_repositorio.visualizar_ordem(
+                id_ordem=id_ordem,
+            )
+            response = VisualizaOrdemResponse(
+                id = ordem[0],
+                acao = ordem[1],
+                item = ordem[2],
+                descricao = ordem[3],
+                nomeInst = ordem[4],
+                areaConhecimento = ordem[5],
+                emprestimo = ordem[6],
+                dataPublicacao = ordem[7],
+                dataValidade = ordem[8],
+            )
+        return response
