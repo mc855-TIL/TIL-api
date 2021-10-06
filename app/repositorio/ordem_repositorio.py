@@ -78,7 +78,6 @@ class OrdemRepositorio:
             consulta = consulta.filter_by(id=id_ordem)
             ordem = consulta.one()
             print(' Ordem = ', ordem)
-            print('COOOOOOOOOOOOOOOOOOOOOOON = ', consulta)
             print(type(consulta))
             # print (response)
             response = VisualizaOrdemResponse(

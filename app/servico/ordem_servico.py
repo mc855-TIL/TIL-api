@@ -79,4 +79,6 @@ class OrdemServico:
         )
         print('Servico ordem = ', ordem)
         print(ordem.dataPublicacao.year)
+        print(ordem.dataPublicacao.month)
+        print(ordem.dataPublicacao.day)
         return ordem

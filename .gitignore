@@ -136,3 +136,4 @@ dmypy.json
 
 # sqlite database
 *.db
+database.db
