@@ -1,5 +1,8 @@
 from app.modelo.sqlite.ordem_modelo import Ordem
 from paginate_sqlalchemy import SqlalchemyOrmPage
+from app.api.response.ordem_response import (
+    VisualizaOrdemResponse
+)
 from sqlalchemy import or_
 from sqlalchemy.orm.session import Session
 from sqlalchemy.sql.expression import or_
@@ -17,7 +20,7 @@ class OrdemRepositorio:
 
         consulta = self.sessao.query(Ordem).with_entities(
             Ordem.id,
-            Ordem.tipo,
+            Ordem.acao,
             Ordem.item,
             Ordem.nomeInst,
             Ordem.areaConhecimento,
@@ -35,7 +38,7 @@ class OrdemRepositorio:
 
         consulta = self.sessao.query(Ordem).with_entities(
             Ordem.id,
-            Ordem.tipo,
+            Ordem.acao,
             Ordem.item,
             Ordem.nomeInst,
             Ordem.areaConhecimento,
@@ -56,16 +59,65 @@ class OrdemRepositorio:
     def visualizar_ordem(
         self,
         id_ordem: int,
-    ) -> SqlalchemyOrmPage:
+        auth: bool,
+    ) -> VisualizaOrdemResponse:
 
-        consulta = self.sessao.query(Ordem).with_entities(
-            Ordem.id,
-            Ordem.tipo,
-            Ordem.item,
-            Ordem.nomeInst,
-            Ordem.areaConhecimento,
-            Ordem.emprestimo,
-        )
-        consulta = consulta.filter_by(id=id_ordem)
+        if auth:
+            consulta = self.sessao.query(Ordem).with_entities(
+                Ordem.id,
+                Ordem.acao,
+                Ordem.item,
+                Ordem.descricao,
+                Ordem.nomeInst,
+                Ordem.areaConhecimento,
+                Ordem.emprestimo,
+                Ordem.data_publicacao,
+                Ordem.data_validade,
+                Ordem.contato
+            )
+            consulta = consulta.filter_by(id=id_ordem)
+            ordem = consulta.one()
+            print(' Ordem = ', ordem)
+            print('COOOOOOOOOOOOOOOOOOOOOOON = ', consulta)
+            print(type(consulta))
+            # print (response)
+            response = VisualizaOrdemResponse(
+                id = ordem[0],
+                acao = ordem[1],
+                item = ordem[2],
+                descricao = ordem[3],
+                nomeInst = ordem[4],
+                areaConhecimento = ordem[5],
+                emprestimo = ordem[6],
+                dataPublicacao = ordem[7],
+                dataValidade = ordem[8],
+                contato = ordem[9]
+            )
+        else:
+            consulta = self.sessao.query(Ordem).with_entities(
+                Ordem.id,
+                Ordem.acao,
+                Ordem.item,
+                Ordem.descricao,
+                Ordem.nomeInst,
+                Ordem.areaConhecimento,
+                Ordem.emprestimo,
+                Ordem.data_publicacao,
+                Ordem.data_validade,
+            )
+            consulta = consulta.filter_by(id=id_ordem)
+            ordem = consulta.one()
 
-        return SqlalchemyOrmPage(consulta,)
+
+            response = VisualizaOrdemResponse(
+                id = ordem[0],
+                acao = ordem[1],
+                item = ordem[2],
+                descricao = ordem[3],
+                nomeInst = ordem[4],
+                areaConhecimento = ordem[5],
+                emprestimo = ordem[6],
+                dataPublicacao = ordem[7],
+                dataValidade = ordem[8],
+            )
+        return response

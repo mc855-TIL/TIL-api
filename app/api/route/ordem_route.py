@@ -1,6 +1,6 @@
 from typing import Optional
 
-from app.api.response.ordem_response import ListaOrdemResponse, OrdemResponse
+from app.api.response.ordem_response import ListaOrdemResponse, OrdemResponse, VisualizaOrdemResponse
 from app.config.settings import settings
 from app.container import get_ordem_servico
 from app.servico import OrdemServico
@@ -49,12 +49,13 @@ def buscar_ordens(
     return servico.buscar_ordens(pesquisa=pesquisa, pagina=pagina, limite=limite)
 
 @app.get(
-    '/ordens/{id_ordem}',
-    response_model=OrdemResponse,
+    '/ordens/',
+    response_model=VisualizaOrdemResponse,
     summary="Visualização de ordem através do ID",
     )
-async def visualizar_ordem(
+def visualizar_ordem(
     id_ordem: int,
+    auth: Optional[bool] = False,
     servico: OrdemServico = Depends(get_ordem_servico),
 ):
     """
@@ -63,6 +64,6 @@ async def visualizar_ordem(
     Args:
         id_ordem (int): ID da ordem requisitada
     """
-    return se
+    return servico.visualizar_ordem(id_ordem=id_ordem, auth=auth)
 
 

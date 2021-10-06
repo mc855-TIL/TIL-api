@@ -1,6 +1,9 @@
 from typing import List
 
-from app.api.response.ordem_response import ListaOrdemResponse, OrdemResponse
+from app.api.response.ordem_response import (
+    ListaOrdemResponse, OrdemResponse,
+    VisualizaOrdemResponse
+)
 from app.repositorio import OrdemRepositorio
 
 
@@ -58,19 +61,22 @@ class OrdemServico:
     def visualizar_ordem(
         self,
         id_ordem: int,
-
-    ) -> OrdemResponse:
+        auth: bool,
+    ) -> VisualizaOrdemResponse:
         """
         Visualiza apenas uma ordem. Recupera os dados através da ID
-    (Método para usuário anônimo do site)
-    Args:
+        (Método para usuário anônimo do site)
+        Args:
         id_ordem (int): ID da ordem requisitada
 
         Returns:
             OrdemResponse: Ordem buscada
         """
 
-        ordem = self.ordem_repositorio.buscar_ordens(
+        ordem = self.ordem_repositorio.visualizar_ordem(
             id_ordem=id_ordem,
+            auth=auth
         )
-        return OrdemResponse.parse_obj(ordem.__dict__)
+        print('Servico ordem = ', ordem)
+        print(ordem.dataPublicacao.year)
+        return ordem
