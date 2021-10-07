@@ -51,7 +51,7 @@ def visualizar_ordem(
 
 
 @app.get(
-    "/ordens/{pesquisa}",
+    "/ordens/",
     response_model=ListaOrdemResponse,
     summary="Lista de ordens de insumos com base em uma pesquisa.",
 )
@@ -68,5 +68,8 @@ def buscar_ordens(
         pagina (int, optional): Pagina de dados.
         limite (int, optional): Limite de dados por página.
     """
-    return servico.buscar_ordens(pesquisa=pesquisa, pagina=pagina, limite=limite)
+    try:
+        response = servico.buscar_ordens(pesquisa=pesquisa, pagina=pagina, limite=limite)
+    except:
+        return {}
 
