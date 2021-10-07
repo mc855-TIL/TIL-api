@@ -108,5 +108,5 @@ class OrdemServico:
                     dataValidade = ordem[8],
                 )
             except:
-                print('Deu ruim!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+                pass
 
