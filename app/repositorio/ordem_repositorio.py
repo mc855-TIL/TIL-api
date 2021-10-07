@@ -5,7 +5,7 @@ from sqlalchemy import or_
 from sqlalchemy.orm.session import Session
 from sqlalchemy.sql.expression import or_
 from sqlalchemy.engine.row import Row
-
+from sqlalchemy import exc
 
 class OrdemRepositorio:
     def __init__(self, sessao: Session) -> None:
@@ -71,7 +71,13 @@ class OrdemRepositorio:
             Ordem.data_validade,
         )
         consulta = consulta.filter_by(id=id_ordem)
-        ordem = consulta.one()
+
+        try:
+            ordem = consulta.one()
+        except exc.NoResultFound:    
+            # breakpoint()
+            # raise exc.NoResultFound
+            return []
 
         return ordem
 

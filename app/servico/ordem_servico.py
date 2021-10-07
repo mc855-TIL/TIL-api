@@ -5,7 +5,7 @@ from app.api.response.ordem_response import (
     VisualizaOrdemResponse
 )
 from app.repositorio import OrdemRepositorio
-
+from pydantic import ValidationError
 
 class OrdemServico:
     def __init__(self, ordem_repositorio: OrdemRepositorio) -> None:
@@ -77,31 +77,36 @@ class OrdemServico:
             ordem = self.ordem_repositorio.visualizar_ordem_autenticado(
                 id_ordem=id_ordem,
             )
-            response = VisualizaOrdemResponse(
-                id = ordem[0],
-                acao = ordem[1],
-                item = ordem[2],
-                descricao = ordem[3],
-                nomeInst = ordem[4],
-                areaConhecimento = ordem[5],
-                emprestimo = ordem[6],
-                dataPublicacao = ordem[7],
-                dataValidade = ordem[8],
-                contato = ordem[9]
-            )
+            if ordem:
+                response = VisualizaOrdemResponse(
+                    id = ordem[0],
+                    acao = ordem[1],
+                    item = ordem[2],
+                    descricao = ordem[3],
+                    nomeInst = ordem[4],
+                    areaConhecimento = ordem[5],
+                    emprestimo = ordem[6],
+                    dataPublicacao = ordem[7],
+                    dataValidade = ordem[8],
+                    contato = ordem[9]
+                )
         else:
+            # try:
             ordem = self.ordem_repositorio.visualizar_ordem(
                 id_ordem=id_ordem,
             )
-            response = VisualizaOrdemResponse(
-                id = ordem[0],
-                acao = ordem[1],
-                item = ordem[2],
-                descricao = ordem[3],
-                nomeInst = ordem[4],
-                areaConhecimento = ordem[5],
-                emprestimo = ordem[6],
-                dataPublicacao = ordem[7],
-                dataValidade = ordem[8],
-            )
-        return response
+            try:
+                return VisualizaOrdemResponse(
+                    id = ordem[0],
+                    acao = ordem[1],
+                    item = ordem[2],
+                    descricao = ordem[3],
+                    nomeInst = ordem[4],
+                    areaConhecimento = ordem[5],
+                    emprestimo = ordem[6],
+                    dataPublicacao = ordem[7],
+                    dataValidade = ordem[8],
+                )
+            except:
+                print('Deu ruim!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+
