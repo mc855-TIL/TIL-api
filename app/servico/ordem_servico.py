@@ -77,8 +77,8 @@ class OrdemServico:
             ordem = self.ordem_repositorio.visualizar_ordem_autenticado(
                 id_ordem=id_ordem,
             )
-            if ordem:
-                response = VisualizaOrdemResponse(
+            try:
+                return VisualizaOrdemResponse(
                     id = ordem[0],
                     acao = ordem[1],
                     item = ordem[2],
@@ -90,8 +90,9 @@ class OrdemServico:
                     dataValidade = ordem[8],
                     contato = ordem[9]
                 )
+            except:
+                pass
         else:
-            # try:
             ordem = self.ordem_repositorio.visualizar_ordem(
                 id_ordem=id_ordem,
             )

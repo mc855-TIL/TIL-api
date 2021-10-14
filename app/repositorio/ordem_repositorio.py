@@ -74,9 +74,7 @@ class OrdemRepositorio:
 
         try:
             ordem = consulta.one()
-        except exc.NoResultFound:    
-            # breakpoint()
-            # raise exc.NoResultFound
+        except exc.NoResultFound:
             return []
 
         return ordem
@@ -99,6 +97,9 @@ class OrdemRepositorio:
             Ordem.contato
         )
         consulta = consulta.filter_by(id=id_ordem)
-        ordem = consulta.one()
+        try:
+            ordem = consulta.one()
+        except exc.NoResultFound:
+            return []
 
         return ordem

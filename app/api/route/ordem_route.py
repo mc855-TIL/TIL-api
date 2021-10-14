@@ -4,7 +4,7 @@ from app.api.response.ordem_response import ListaOrdemResponse, OrdemResponse, V
 from app.config.settings import settings
 from app.container import get_ordem_servico
 from app.servico import OrdemServico
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 
 app = APIRouter()
 
@@ -30,11 +30,13 @@ def listar_ordens(
 
 @app.get(
     '/ordens/{id_ordem}',
+    status_code=200,
     response_model=VisualizaOrdemResponse,
     summary="Visualização de ordem através do ID",
     )
 def visualizar_ordem(
     id_ordem: int,
+    # response: Response,
     auth: Optional[bool] = False,
     servico: OrdemServico = Depends(get_ordem_servico),
 ):
@@ -46,7 +48,11 @@ def visualizar_ordem(
         auth(bool): Flag que diz se o user está autenticado ou não
         True = autenticado; False = não autenticado
     """
-    return servico.visualizar_ordem(id_ordem=id_ordem, auth=auth)
+    ret = servico.visualizar_ordem(id_ordem=id_ordem, auth=auth)
+
+    if ret is None:
+        raise HTTPException(status_code=404, detail="Item não encontrado")
+    return ret
 
 
 
