@@ -1,6 +1,8 @@
 from typing import Optional
 
 from app.api.response.ordem_response import ListaOrdemResponse, OrdemResponse, VisualizaOrdemResponse
+from fastapi.responses import JSONResponse
+from pydantic import BaseModel
 from app.config.settings import settings
 from app.container import get_ordem_servico
 from app.servico import OrdemServico
@@ -30,13 +32,12 @@ def listar_ordens(
 
 @app.get(
     '/ordens/{id_ordem}',
-    status_code=200,
     response_model=VisualizaOrdemResponse,
     summary="Visualização de ordem através do ID",
+    responses={404: {"model": BaseModel}}
     )
 def visualizar_ordem(
     id_ordem: int,
-    # response: Response,
     auth: Optional[bool] = False,
     servico: OrdemServico = Depends(get_ordem_servico),
 ):
@@ -51,7 +52,8 @@ def visualizar_ordem(
     ret = servico.visualizar_ordem(id_ordem=id_ordem, auth=auth)
 
     if ret is None:
-        raise HTTPException(status_code=404, detail="Item não encontrado")
+        return  JSONResponse(status_code=404, content={"message": "Item não encontrado"})
+        # raise HTTPException(status_code=404, detail="Item não encontrado")
     return ret
 
 
