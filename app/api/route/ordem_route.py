@@ -52,7 +52,7 @@ def visualizar_ordem(
     ret = servico.visualizar_ordem(id_ordem=id_ordem, auth=auth)
 
     if ret is None:
-        return  JSONResponse(status_code=404, content={"message": "Item não encontrado"})
+        return  JSONResponse(status_code=404, content=dict())
         # raise HTTPException(status_code=404, detail="Item não encontrado")
     return ret
 
