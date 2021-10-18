@@ -17,3 +17,16 @@ class OrdemResponse(BaseResponse):
 
 class ListaOrdemResponse(PaginacaoResponse):
     items: List[OrdemResponse] = Field(alias="itens")
+
+
+class VisualizaOrdemResponse(BaseResponse):
+    id: int
+    item: str
+    descricao: str
+    acao: str
+    nomeInst: str
+    emprestimo: bool
+    areaConhecimento: str
+    dataPublicacao: date
+    dataValidade: Optional[date]
+    contato: Optional[str]

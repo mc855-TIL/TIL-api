@@ -1,6 +1,9 @@
 from typing import List, Optional
 
-from app.api.response.ordem_response import ListaOrdemResponse
+from app.api.response.ordem_response import ListaOrdemResponse, VisualizaOrdemResponse
+from fastapi.responses import JSONResponse
+from pydantic import BaseModel
+
 from app.config.settings import settings
 from app.container import get_ordem_servico
 from app.servico import OrdemServico
@@ -69,3 +72,35 @@ def listar_ordens(
         pagina=pagina,
         limite=limite,
     )
+
+
+@app.get(
+    '/ordens/{id_ordem}',
+    response_model=VisualizaOrdemResponse,
+    summary="Visualização de ordem através do ID",
+    responses={404: {"model": BaseModel}}
+    )
+def visualizar_ordem(
+    id_ordem: int,
+    auth: Optional[bool] = False,
+    servico: OrdemServico = Depends(get_ordem_servico),
+) -> VisualizaOrdemResponse:
+    """
+    Visualiza apenas uma ordem. Recupera os dados através da ID
+    (Método para usuário anônimo do site)
+
+    **Args**:
+
+        **id_ordem** (int): ID da ordem requisitada
+        **auth(Optional[bool])**: Flag que diz se o user está autenticado ou não
+        True = autenticado; False = não autenticado
+
+    **Returns**:
+
+         - **VisualizaOrdemResponse**:  Modelo de resposta.
+    """
+    ret = servico.visualizar_ordem(id_ordem=id_ordem, auth=auth)
+
+    if ret is None:
+        return  JSONResponse(status_code=404, content=dict())
+    return ret
