@@ -6,7 +6,7 @@ from pydantic import BaseModel
 from app.config.settings import settings
 from app.container import get_ordem_servico
 from app.servico import OrdemServico
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 
 app = APIRouter()
 
@@ -53,7 +53,6 @@ def visualizar_ordem(
 
     if ret is None:
         return  JSONResponse(status_code=404, content=dict())
-        # raise HTTPException(status_code=404, detail="Item não encontrado")
     return ret
 
 
