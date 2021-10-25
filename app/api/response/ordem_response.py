@@ -9,7 +9,7 @@ from . import BaseResponse, PaginacaoResponse
 class OrdemResponse(BaseResponse):
     id: int
     item: str
-    tipo: str
+    acao: str
     nomeInst: str
     emprestimo: bool
     areaConhecimento: str
@@ -17,3 +17,16 @@ class OrdemResponse(BaseResponse):
 
 class ListaOrdemResponse(PaginacaoResponse):
     items: List[OrdemResponse] = Field(alias="itens")
+
+
+class VisualizaOrdemResponse(BaseResponse):
+    id: int
+    item: str
+    descricao: str
+    acao: str
+    nomeInst: str
+    emprestimo: bool
+    areaConhecimento: str
+    data_publicacao: date
+    data_validade: Optional[date]
+    contato: Optional[str]
