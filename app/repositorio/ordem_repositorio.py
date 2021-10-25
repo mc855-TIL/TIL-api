@@ -3,11 +3,10 @@ from typing import Any, List
 from app.modelo.sqlite.ordem_modelo import Ordem
 from app.utils.enums import *
 from paginate_sqlalchemy import SqlalchemyOrmPage
-from sqlalchemy import or_
+from sqlalchemy import exc, or_
+from sqlalchemy.engine.row import Row
 from sqlalchemy.orm.session import Session
 from sqlalchemy.sql.expression import or_
-from sqlalchemy.engine.row import Row
-from sqlalchemy import exc
 
 
 class OrdemRepositorio:
@@ -25,7 +24,7 @@ class OrdemRepositorio:
             self.sessao.query(Ordem)
             .with_entities(
                 Ordem.id,
-                Ordem.tipo,
+                Ordem.acao,
                 Ordem.item,
                 Ordem.nomeInst,
                 Ordem.areaConhecimento,
@@ -35,7 +34,6 @@ class OrdemRepositorio:
         )
 
         return SqlalchemyOrmPage(consulta, page=pagina, items_per_page=limite)
-
 
     def visualizar_ordem(
         self,
@@ -76,7 +74,7 @@ class OrdemRepositorio:
             Ordem.emprestimo,
             Ordem.data_publicacao,
             Ordem.data_validade,
-            Ordem.contato
+            Ordem.contato,
         )
         consulta = consulta.filter_by(id=id_ordem)
         try:

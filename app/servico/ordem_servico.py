@@ -64,7 +64,6 @@ class OrdemServico:
 
         return ListaOrdemResponse.parse_obj(ordens.__dict__)
 
-
     def visualizar_ordem(
         self,
         id_ordem: int,
@@ -85,18 +84,7 @@ class OrdemServico:
                 id_ordem=id_ordem,
             )
             try:
-                return VisualizaOrdemResponse(
-                    id = ordem[0],
-                    acao = ordem[1],
-                    item = ordem[2],
-                    descricao = ordem[3],
-                    nomeInst = ordem[4],
-                    areaConhecimento = ordem[5],
-                    emprestimo = ordem[6],
-                    dataPublicacao = ordem[7],
-                    dataValidade = ordem[8],
-                    contato = ordem[9]
-                )
+                return VisualizaOrdemResponse.from_orm(ordem)
             except:
                 pass
         else:
@@ -104,16 +92,6 @@ class OrdemServico:
                 id_ordem=id_ordem,
             )
             try:
-                return VisualizaOrdemResponse(
-                    id = ordem[0],
-                    acao = ordem[1],
-                    item = ordem[2],
-                    descricao = ordem[3],
-                    nomeInst = ordem[4],
-                    areaConhecimento = ordem[5],
-                    emprestimo = ordem[6],
-                    dataPublicacao = ordem[7],
-                    dataValidade = ordem[8],
-                )
+                return VisualizaOrdemResponse.from_orm(ordem)
             except:
                 pass
