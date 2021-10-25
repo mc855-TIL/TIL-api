@@ -83,15 +83,9 @@ class OrdemServico:
             ordem = self.ordem_repositorio.visualizar_ordem_autenticado(
                 id_ordem=id_ordem,
             )
-            try:
-                return VisualizaOrdemResponse.from_orm(ordem)
-            except:
-                pass
         else:
             ordem = self.ordem_repositorio.visualizar_ordem(
                 id_ordem=id_ordem,
             )
-            try:
-                return VisualizaOrdemResponse.from_orm(ordem)
-            except:
-                pass
+
+        return VisualizaOrdemResponse.from_orm(ordem)

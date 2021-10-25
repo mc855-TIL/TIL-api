@@ -3,10 +3,8 @@ from typing import Any, List
 from app.modelo.sqlite.ordem_modelo import Ordem
 from app.utils.enums import *
 from paginate_sqlalchemy import SqlalchemyOrmPage
-from sqlalchemy import exc, or_
 from sqlalchemy.engine.row import Row
 from sqlalchemy.orm.session import Session
-from sqlalchemy.sql.expression import or_
 
 
 class OrdemRepositorio:
@@ -50,14 +48,8 @@ class OrdemRepositorio:
             Ordem.data_publicacao,
             Ordem.data_validade,
         )
-        consulta = consulta.filter_by(id=id_ordem)
 
-        try:
-            ordem = consulta.one()
-        except exc.NoResultFound:
-            return []
-
-        return ordem
+        return consulta.filter_by(id=id_ordem).one()
 
     def visualizar_ordem_autenticado(
         self,
@@ -76,10 +68,4 @@ class OrdemRepositorio:
             Ordem.data_validade,
             Ordem.contato,
         )
-        consulta = consulta.filter_by(id=id_ordem)
-        try:
-            ordem = consulta.one()
-        except exc.NoResultFound:
-            return []
-
-        return ordem
+        return consulta.filter_by(id=id_ordem).one()
