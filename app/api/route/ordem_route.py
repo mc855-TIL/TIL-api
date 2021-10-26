@@ -4,7 +4,7 @@ from app.api.response.ordem_response import ListaOrdemResponse, VisualizaOrdemRe
 from app.config.settings import settings
 from app.container import get_ordem_servico
 from app.servico import OrdemServico
-from app.utils.enums import AcaoOrdemEnum, AreaConhecimentoEnum, TipoOrdemEnum
+from app.utils.enums import AcaoOrdemEnum, area_conhecimentoEnum, TipoOrdemEnum
 from fastapi import APIRouter, Depends
 from fastapi.param_functions import Query
 from fastapi.responses import JSONResponse
@@ -23,7 +23,7 @@ def listar_ordens(
     acao: Optional[AcaoOrdemEnum] = None,
     nomeInst: Optional[str] = None,
     tipo: Optional[List[TipoOrdemEnum]] = Query([]),
-    areaConhecimento: Optional[List[AreaConhecimentoEnum]] = Query([]),
+    area_conhecimento: Optional[List[area_conhecimentoEnum]] = Query([]),
     emprestimo: Optional[bool] = None,
     servico: OrdemServico = Depends(get_ordem_servico),
     pagina: Optional[int] = 1,
@@ -45,7 +45,7 @@ def listar_ordens(
         - **tipo** (Optional[List[TipoOrdemEnum]], optional):
             Filtra pelo tipo de ordem (Insumo/Livro).
 
-        - **areaConhecimento** (Optional[List[AreaConhecimentoEnum]], optional):
+        - **area_conhecimento** (Optional[List[area_conhecimentoEnum]], optional):
             Filtra pela área de conhecimento.
 
         - **emprestimo** (Optional[bool], optional):
@@ -66,7 +66,7 @@ def listar_ordens(
         acao=acao,
         nomeInst=nomeInst,
         tipo=tipo,
-        areaConhecimento=areaConhecimento,
+        area_conhecimento=area_conhecimento,
         emprestimo=emprestimo,
         pagina=pagina,
         limite=limite,

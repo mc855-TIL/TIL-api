@@ -10,7 +10,7 @@ class OrdemResponse(BaseResponse):
     id: int
     item: str
     acao: str
-    nomeInst: str
+    nome_instituicao: str
     emprestimo: bool
     area_conhecimento: str
 

@@ -21,12 +21,12 @@ class OrdemRepositorio:
     ) -> SqlalchemyOrmPage:
 
         consulta = (
-            self.sessao.query(Ordem)
+            self.sessao.query(Ordem).join(Usuario).join(Instituicao)
             .with_entities(
                 Ordem.id,
                 Ordem.acao,
                 Ordem.item,
-                Ordem.nomeInst,
+                Instituicao.nome.label('nome_instituicao'),
                 Ordem.area_conhecimento,
                 Ordem.emprestimo,
             )
