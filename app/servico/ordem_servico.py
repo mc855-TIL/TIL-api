@@ -16,7 +16,7 @@ class OrdemServico:
         acao: AcaoOrdemEnum,
         nomeInst: str,
         tipo: List[TipoOrdemEnum],
-        area_conhecimento: List[areaConhecimentoEnum],
+        area_conhecimento: List[AreaConhecimentoEnum],
         emprestimo: bool,
         pagina: int,
         limite: int,

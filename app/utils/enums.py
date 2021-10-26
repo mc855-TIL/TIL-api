@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class areaConhecimentoEnum(Enum):
+class AreaConhecimentoEnum(Enum):
     BIOLOGICAS = "Biológicas"
     EXATAS = "Exatas"
     HUMANAS = "Humanas"
