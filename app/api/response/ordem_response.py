@@ -12,7 +12,7 @@ class OrdemResponse(BaseResponse):
     acao: str
     nomeInst: str
     emprestimo: bool
-    areaConhecimento: str
+    area_conhecimento: str
 
 
 class ListaOrdemResponse(PaginacaoResponse):
@@ -24,9 +24,10 @@ class VisualizaOrdemResponse(BaseResponse):
     item: str
     descricao: str
     acao: str
-    nomeInst: str
+    nome_instituicao: str
     emprestimo: bool
-    areaConhecimento: str
+    area_conhecimento: str
     data_publicacao: date
     data_validade: Optional[date]
     contato: Optional[str]
+    quantidade: Optional[str]
