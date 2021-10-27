@@ -16,7 +16,7 @@ class OrdemServico:
         acao: AcaoOrdemEnum,
         nomeInst: str,
         tipo: List[TipoOrdemEnum],
-        areaConhecimento: List[AreaConhecimentoEnum],
+        area_conhecimento: List[AreaConhecimentoEnum],
         emprestimo: bool,
         pagina: int,
         limite: int,
@@ -49,9 +49,9 @@ class OrdemServico:
             lista_tipo = [item.value for item in tipo]
             filtros.append(Ordem.tipo.in_(lista_tipo))
 
-        if areaConhecimento:
-            lista_area = [area.value for area in areaConhecimento]
-            filtros.append(Ordem.areaConhecimento.in_(lista_area))
+        if area_conhecimento:
+            lista_area = [area.value for area in area_conhecimento]
+            filtros.append(Ordem.area_conhecimento.in_(lista_area))
 
         if isinstance(emprestimo, bool):
             filtros.append(Ordem.emprestimo.is_(emprestimo))

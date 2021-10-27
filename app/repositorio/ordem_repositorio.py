@@ -1,6 +1,8 @@
 from typing import Any, List
 
 from app.modelo.sqlite.ordem_modelo import Ordem
+from app.modelo.sqlite.usuario_modelo import Usuario
+from app.modelo.sqlite.instituicao_modelo import Instituicao
 from app.utils.enums import *
 from paginate_sqlalchemy import SqlalchemyOrmPage
 from sqlalchemy.engine.row import Row
@@ -19,13 +21,13 @@ class OrdemRepositorio:
     ) -> SqlalchemyOrmPage:
 
         consulta = (
-            self.sessao.query(Ordem)
+            self.sessao.query(Ordem).join(Usuario).join(Instituicao)
             .with_entities(
                 Ordem.id,
                 Ordem.acao,
                 Ordem.item,
-                Ordem.nomeInst,
-                Ordem.areaConhecimento,
+                Instituicao.nome.label('nome_instituicao'),
+                Ordem.area_conhecimento,
                 Ordem.emprestimo,
             )
             .filter(*filtros)
@@ -37,16 +39,16 @@ class OrdemRepositorio:
         self,
         id_ordem: int,
     ) -> Row:
-        consulta = self.sessao.query(Ordem).with_entities(
+        consulta = self.sessao.query(Ordem).join(Usuario).join(Instituicao).with_entities(
             Ordem.id,
             Ordem.acao,
             Ordem.item,
             Ordem.descricao,
-            Ordem.nomeInst,
-            Ordem.areaConhecimento,
+            Ordem.area_conhecimento,
             Ordem.emprestimo,
             Ordem.data_publicacao,
             Ordem.data_validade,
+            Instituicao.nome.label('nome_instituicao'),
         )
 
         return consulta.filter_by(id=id_ordem).one()
@@ -56,16 +58,17 @@ class OrdemRepositorio:
         id_ordem: int,
     ) -> Row:
 
-        consulta = self.sessao.query(Ordem).with_entities(
+        consulta = self.sessao.query(Ordem).join(Usuario).join(Instituicao).with_entities(
             Ordem.id,
             Ordem.acao,
             Ordem.item,
             Ordem.descricao,
-            Ordem.nomeInst,
-            Ordem.areaConhecimento,
+            Ordem.area_conhecimento,
             Ordem.emprestimo,
             Ordem.data_publicacao,
             Ordem.data_validade,
-            Ordem.contato,
+            Usuario.contato,
+            Ordem.quantidade,
+            Instituicao.nome.label('nome_instituicao'),
         )
         return consulta.filter_by(id=id_ordem).one()

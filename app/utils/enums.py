@@ -16,3 +16,9 @@ class TipoOrdemEnum(Enum):
 class AcaoOrdemEnum(Enum):
     OFERTA = "O"
     PEDIDO = "P"
+
+
+class StatusOrdemEnum(Enum):
+    DISPONIVEL = "DISPONIVEL"
+    EM_NEGOCIACAO = "EM_NEGOCIACAO"
+    FINALIZADO = "FINALIZADO"
