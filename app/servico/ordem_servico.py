@@ -124,3 +124,23 @@ class OrdemServico:
 
         else:
             raise ExcecaoNaoAutenticado
+
+    def deletar_ordem(
+        self,
+        id_ordem: int,
+        auth: bool,
+    ):
+        """Apaga uma ordem.
+        Args:
+            id_ordem (int): ID da ordem requisitada
+            auth(bool): Flag que diz se o user está autenticado ou não.
+
+        Raises:
+            ExcecaoNaoAutenticado: Usuario não autenticado.
+        """
+
+        if auth:
+            self.ordem_repositorio.deletar_ordem(id_ordem=id_ordem)
+        else:
+            raise ExcecaoNaoAutenticado
+

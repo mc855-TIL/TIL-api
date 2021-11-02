@@ -90,3 +90,14 @@ class OrdemRepositorio:
     ) -> None:
         with self.sessao.transaction:
             self.sessao.merge(ordem)
+
+    def deletar_ordem(
+        self,
+        id_ordem: int,
+    ) -> None:
+        with self.sessao.begin():
+            consulta = (
+                self.sessao.query(Ordem)
+            )
+            consulta.filter_by(id=id_ordem).delete()
+
