@@ -1,9 +1,13 @@
+from datetime import datetime, timedelta
 from typing import List
 
+from app.api.request.ordem_request import CriarOrdemRequest
 from app.api.response.ordem_response import ListaOrdemResponse, VisualizaOrdemResponse
 from app.modelo.sqlite.ordem_modelo import Ordem
 from app.repositorio import OrdemRepositorio
 from app.utils.enums import *
+from app.utils.enums import StatusOrdemEnum
+from app.utils.excecao import ExcecaoNaoAutenticado, ExcecaoRegraNegocio
 
 
 class OrdemServico:
@@ -70,12 +74,12 @@ class OrdemServico:
         auth: bool,
     ) -> VisualizaOrdemResponse:
         """
-        Visualiza apenas uma ordem. Recupera os dados através da ID
-        (Método para usuário anônimo do site)
+        Visualiza apenas uma ordem.
+
         Args:
-        id_ordem (int): ID da ordem requisitada
-        auth(bool): Flag que diz se o user está autenticado ou não
-        True = autenticado; False = não autenticado
+            id_ordem (int): ID da ordem requisitada
+            auth(bool): Flag que diz se o user está autenticado ou não.
+
         Returns:
             VisualizaOrdemResponse: Detalhes da ordem buscada
         """
@@ -89,3 +93,34 @@ class OrdemServico:
             )
 
         return VisualizaOrdemResponse.from_orm(ordem)
+
+    def criar_ordem(
+        self,
+        criar_ordem: CriarOrdemRequest,
+        auth: bool,
+    ):
+        """Criar uma ordem.
+
+        Args:
+            criar_ordem (CriarOrdemRequest): Dados da ordem.
+            auth (bool): Flag de autenticação.
+
+        Raises:
+            ExcecaoRegraNegocio: Data validade não permitida
+            ExcecaoNaoAutenticado: Usuario não autenticado.
+        """
+
+        if auth:
+            dia_atual = (datetime.utcnow() - timedelta(hours=3)).date()
+
+            ordem = criar_ordem.instancia
+
+            if ordem.data_validade < dia_atual:
+                raise ExcecaoRegraNegocio(msg="Data validade menor que a data atual.")
+
+            ordem.data_publicacao = dia_atual
+            ordem.status = StatusOrdemEnum.DISPONIVEL.value
+            self.ordem_repositorio.criar_ordem(ordem=ordem)
+
+        else:
+            raise ExcecaoNaoAutenticado
