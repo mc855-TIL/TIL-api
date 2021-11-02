@@ -130,7 +130,7 @@ class OrdemServico:
         nome_item: str,
         auth: bool,
     ) -> ListaItemResponse:
-        """Criar uma ordem.
+        """Pesuisar nome de item.
 
         Args:
             nome_item (str):Nome do item.

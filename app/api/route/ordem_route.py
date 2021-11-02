@@ -113,8 +113,7 @@ def pesquisar_nome_item(
     servico: OrdemServico = Depends(get_ordem_servico),
 ) -> ListaItemResponse:
     """
-    Visualiza apenas uma ordem. Recupera os dados através da ID
-    (Método para usuário anônimo do site)
+    Pesquisa nome de ordens
 
     **Args**:
 
