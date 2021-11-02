@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from typing import List
 
 from app.api.request.ordem_request import CriarOrdemRequest
-from app.api.response.ordem_response import ListaOrdemResponse, VisualizaOrdemResponse
+from app.api.response.ordem_response import ListaOrdemResponse, VisualizaOrdemResponse, ListaItemResponse
 from app.modelo.sqlite.ordem_modelo import Ordem
 from app.repositorio import OrdemRepositorio
 from app.utils.enums import *
@@ -122,5 +122,39 @@ class OrdemServico:
             ordem.status = StatusOrdemEnum.DISPONIVEL.value
             self.ordem_repositorio.criar_ordem(ordem=ordem)
 
+        else:
+            raise ExcecaoNaoAutenticado
+
+    def pesquisar_nome_item(
+        self,
+        nome_item: str,
+        auth: bool,
+    ) -> ListaItemResponse:
+        """Criar uma ordem.
+
+        Args:
+            nome_item (str):Nome do item.
+            auth (bool): Flag de autenticação.
+
+        Raises:
+            ExcecaoNaoAutenticado: Usuario não autenticado.
+        """
+        if auth:
+            filtros = []
+            filtros.append(Ordem.item.ilike(f"%{nome_item}%"))
+
+            resp = self.ordem_repositorio.pesquisar_nome_item(
+                nome_item=nome_item,
+                filtros=filtros,
+            )
+            str_list =  []
+            for i, item in enumerate(resp):
+                str_list.append(item[0])
+            
+            breakpoint()
+            listItemResp = ListaItemResponse(items=str_list)
+            # listItemResp.items = str_list
+
+            return listItemResp
         else:
             raise ExcecaoNaoAutenticado

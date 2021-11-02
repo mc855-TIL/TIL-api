@@ -6,6 +6,7 @@ from app.modelo.sqlite.usuario_modelo import Usuario
 from app.utils.enums import *
 from paginate_sqlalchemy import SqlalchemyOrmPage
 from sqlalchemy.orm.session import Session
+from sqlalchemy.engine.row import Row
 
 
 class OrdemRepositorio:
@@ -90,3 +91,20 @@ class OrdemRepositorio:
     ) -> None:
         with self.sessao.transaction:
             self.sessao.merge(ordem)
+
+    def pesquisar_nome_item(
+        self,
+        nome_item: str,
+        filtros: List[Any],
+    ) -> List[Row]:
+
+        consulta = (
+            self.sessao.query(Ordem)
+            .with_entities(
+                Ordem.item,
+            )
+            .filter(*filtros)
+        )
+
+        res = consulta.distinct().all()
+        return res

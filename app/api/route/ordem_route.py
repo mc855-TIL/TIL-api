@@ -1,7 +1,7 @@
 from typing import List, Optional
 
 from app.api.request.ordem_request import CriarOrdemRequest
-from app.api.response.ordem_response import ListaOrdemResponse, VisualizaOrdemResponse
+from app.api.response.ordem_response import ListaOrdemResponse, VisualizaOrdemResponse, ListaItemResponse
 from app.config.settings import settings
 from app.container import get_ordem_servico
 from app.servico import OrdemServico
@@ -103,6 +103,39 @@ def criar_ordem(
 
 
 @app.get(
+    "/ordens/{nome_item}",
+    response_model=VisualizaOrdemResponse,
+    summary="Pesuisa de nomes de item",
+)
+def pesquisar_nome_item(
+    nome_item: str,
+    auth: Optional[bool] = False,
+    servico: OrdemServico = Depends(get_ordem_servico),
+) -> ListaItemResponse:
+    """
+    Visualiza apenas uma ordem. Recupera os dados através da ID
+    (Método para usuário anônimo do site)
+
+    **Args**:
+
+        **nome_item** (str):
+            ID da ordem requisitada
+
+        **auth(Optional[bool])**:
+            Flag que diz se o user está autenticado ou não.
+
+    **Returns**:
+         **ListaItemResponse**:
+            Modelo de resposta.
+
+    **Raises**:
+        - **ExcecaoNaoAutenticado**:
+            Usuario não autenticado.
+    """
+    return servico.pesquisar_nome_item(nome_item=nome_item, auth=auth)
+
+
+@app.get(
     "/ordens/{id_ordem}",
     response_model=VisualizaOrdemResponse,
     summary="Visualização de ordem através do ID",
@@ -129,3 +162,4 @@ def visualizar_ordem(
             Modelo de resposta.
     """
     return servico.visualizar_ordem(id_ordem=id_ordem, auth=auth)
+
