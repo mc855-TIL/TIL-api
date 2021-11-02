@@ -115,7 +115,7 @@ class OrdemRepositorio:
         print(parametros_nao_nulos)
         with self.sessao.begin():
             consulta = (self.sessao.query(Ordem))
-            
+
             consulta.filter_by(id=ordem.id) \
             .update(parametros_nao_nulos)
 
