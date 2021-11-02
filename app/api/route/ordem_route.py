@@ -1,14 +1,13 @@
 from typing import List, Optional
 
+from app.api.request.ordem_request import CriarOrdemRequest
 from app.api.response.ordem_response import ListaOrdemResponse, VisualizaOrdemResponse
 from app.config.settings import settings
 from app.container import get_ordem_servico
 from app.servico import OrdemServico
 from app.utils.enums import AcaoOrdemEnum, AreaConhecimentoEnum, TipoOrdemEnum
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, status
 from fastapi.param_functions import Query
-from fastapi.responses import JSONResponse
-from pydantic import BaseModel
 
 app = APIRouter()
 
@@ -58,8 +57,8 @@ def listar_ordens(
             Quantidade de ordens por página.
 
     **Returns**:
-
-         - **ListaOrdemResponse**:  Modelo de resposta.
+        - **ListaOrdemResponse**:
+            Modelo de resposta.
     """
     return servico.listar_ordens(
         pesquisa=pesquisa,
@@ -71,6 +70,36 @@ def listar_ordens(
         pagina=pagina,
         limite=limite,
     )
+
+
+@app.post(
+    "/ordens",
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Cria uma ordem de insumo.",
+)
+def criar_ordem(
+    criar_ordem: CriarOrdemRequest,
+    auth: Optional[bool] = False,
+    servico: OrdemServico = Depends(get_ordem_servico),
+) -> None:
+    """Criar uma nova ordem.
+
+    **Args**:
+        - **criar_ordem** (CriarOrdemRequest):
+            Corpo da requisiçãao.
+
+        - **auth(Optional[bool])**:
+            Flag que diz se o user está autenticado ou não.
+
+    **Raises**:
+        - **ExcecaoRegraNegocio**:
+            Data validade não permitida.
+
+        - **ExcecaoNaoAutenticado**:
+            Usuario não autenticado.
+    """
+
+    servico.criar_ordem(criar_ordem=criar_ordem, auth=auth)
 
 
 @app.get(
@@ -89,12 +118,14 @@ def visualizar_ordem(
 
     **Args**:
 
-        **id_ordem** (int): ID da ordem requisitada
-        **auth(Optional[bool])**: Flag que diz se o user está autenticado ou não
-        True = autenticado; False = não autenticado
+        **id_ordem** (int):
+            ID da ordem requisitada
+
+        **auth(Optional[bool])**:
+            Flag que diz se o user está autenticado ou não.
 
     **Returns**:
-
-         - **VisualizaOrdemResponse**:  Modelo de resposta.
+        - **VisualizaOrdemResponse**:
+            Modelo de resposta.
     """
     return servico.visualizar_ordem(id_ordem=id_ordem, auth=auth)
