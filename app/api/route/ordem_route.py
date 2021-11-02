@@ -104,7 +104,7 @@ def criar_ordem(
 
 @app.get(
     "/ordens/{nome_item}",
-    response_model=VisualizaOrdemResponse,
+    response_model=ListaItemResponse,
     summary="Pesuisa de nomes de item",
 )
 def pesquisar_nome_item(

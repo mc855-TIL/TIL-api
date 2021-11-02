@@ -150,8 +150,7 @@ class OrdemServico:
             str_list =  []
             for i, item in enumerate(resp):
                 str_list.append(item[0])
-            
-            breakpoint()
+
             listItemResp = ListaItemResponse(items=str_list)
             # listItemResp.items = str_list
 
