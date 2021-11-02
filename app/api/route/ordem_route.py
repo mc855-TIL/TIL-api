@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from app.api.request.ordem_request import CriarOrdemRequest
+from app.api.request.ordem_request import CriarOrdemRequest, AtualizaOrdemRequest
 from app.api.response.ordem_response import ListaOrdemResponse, VisualizaOrdemResponse
 from app.config.settings import settings
 from app.container import get_ordem_servico
@@ -75,7 +75,7 @@ def listar_ordens(
 @app.post(
     "/ordens",
     status_code=status.HTTP_204_NO_CONTENT,
-    summary="Cria uma ordem de insumo.",
+    summary="Cria uma ordem de item.",
 )
 def criar_ordem(
     criar_ordem: CriarOrdemRequest,
@@ -100,6 +100,36 @@ def criar_ordem(
     """
 
     servico.criar_ordem(criar_ordem=criar_ordem, auth=auth)
+
+
+@app.patch(
+    "/ordens",
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Atualiza uma ordem de item.",
+)
+def atualiza_ordem(
+    atualizar_ordem: AtualizaOrdemRequest,
+    auth: Optional[bool] = False,
+    servico: OrdemServico = Depends(get_ordem_servico),
+) -> None:
+    """Atualiza uma nova ordem.
+
+    **Args**:
+        - **atualizar_ordem** (CriarOrdemRequest):
+            Corpo da requisiçãao.
+
+        - **auth(Optional[bool])**:
+            Flag que diz se o user está autenticado ou não.
+
+    **Raises**:
+        - **ExcecaoRegraNegocio**:
+            Data validade não permitida.
+
+        - **ExcecaoNaoAutenticado**:
+            Usuario não autenticado.
+    """
+
+    servico.atualiza_ordem(atualizar_ordem=atualizar_ordem, auth=auth)
 
 
 @app.get(
