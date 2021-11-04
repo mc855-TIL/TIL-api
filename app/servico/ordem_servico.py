@@ -125,6 +125,26 @@ class OrdemServico:
         else:
             raise ExcecaoNaoAutenticado
 
+
+    def deletar_ordem(
+        self,
+        id_ordem: int,
+        auth: bool,
+    ):
+        """Apaga uma ordem.
+        Args:
+            id_ordem (int): ID da ordem requisitada
+            auth(bool): Flag que diz se o user está autenticado ou não.
+
+        Raises:"""
+        if auth:
+
+            self.ordem_repositorio.deletar_ordem(id_ordem=id_ordem)
+        else:
+            raise ExcecaoNaoAutenticado
+
+
+
     def atualiza_ordem(
         self,
         atualizar_ordem: AtualizaOrdemRequest,
@@ -138,18 +158,20 @@ class OrdemServico:
 
         Raises:
             ExcecaoRegraNegocio: Data validade não permitida
+
             ExcecaoNaoAutenticado: Usuario não autenticado.
         """
 
         if auth:
-            ordem = atualizar_ordem.instancia
+          ordem = atualizar_ordem.instancia
 
-            if atualizar_ordem.data_validade:
-                dia_atual = (datetime.utcnow() - timedelta(hours=3)).date()
-                if atualizar_ordem.data_validade < dia_atual:
-                    raise ExcecaoRegraNegocio(msg="Data validade menor que a data atual.")
+          if atualizar_ordem.data_validade:
+              dia_atual = (datetime.utcnow() - timedelta(hours=3)).date()
+              if atualizar_ordem.data_validade < dia_atual:
+                  raise ExcecaoRegraNegocio(msg="Data validade menor que a data atual.")
 
-            self.ordem_repositorio.atualiza_ordem(ordem=ordem)
+          self.ordem_repositorio.atualiza_ordem(ordem=ordem)
 
         else:
             raise ExcecaoNaoAutenticado
+

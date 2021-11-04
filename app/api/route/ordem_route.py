@@ -102,6 +102,31 @@ def criar_ordem(
     servico.criar_ordem(criar_ordem=criar_ordem, auth=auth)
 
 
+@app.delete(
+    "/ordens/{id_ordem}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Apagar ordem através do ID",
+)
+def deletar_ordem(
+    id_ordem: int,
+    auth: Optional[bool] = False,
+    servico: OrdemServico = Depends(get_ordem_servico),
+) -> None:
+    """Apaga uma ordem
+
+    **Args**:
+        **id_ordem** (int):
+            ID da ordem requisitada
+
+        **auth(Optional[bool])**:
+            Flag que diz se o user está autenticado ou não.
+
+    **Raises**:
+        - **ExcecaoNaoAutenticado**:
+            Usuario não autenticado.
+    """
+    return servico.deletar_ordem(id_ordem=id_ordem, auth=auth)
+
 @app.patch(
     "/ordens",
     status_code=status.HTTP_204_NO_CONTENT,

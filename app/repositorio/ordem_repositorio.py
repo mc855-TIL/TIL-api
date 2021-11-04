@@ -90,7 +90,17 @@ class OrdemRepositorio:
         with self.sessao.transaction:
             self.sessao.merge(ordem)
 
-    def atualiza_ordem(
+    def deletar_ordem(
+        self,
+        id_ordem: int,
+    ) -> None:
+        with self.sessao.begin():
+            consulta = (
+                self.sessao.query(Ordem)
+            )
+            consulta.filter_by(id=id_ordem).delete()
+
+def atualiza_ordem(
         self,
         ordem: Ordem,
     ) -> None:
@@ -120,3 +130,4 @@ class OrdemRepositorio:
             .update(parametros_nao_nulos)
 
 
+            
