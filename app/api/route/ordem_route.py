@@ -1,7 +1,7 @@
 from typing import List, Optional
 
-from app.api.request.ordem_request import CriarOrdemRequest
 from app.api.response.ordem_response import ListaOrdemResponse, VisualizaOrdemResponse, ListaItemResponse
+from app.api.request.ordem_request import CriarOrdemRequest, AtualizaOrdemRequest
 from app.config.settings import settings
 from app.container import get_ordem_servico
 from app.servico import OrdemServico
@@ -75,7 +75,7 @@ def listar_ordens(
 @app.post(
     "/ordens",
     status_code=status.HTTP_204_NO_CONTENT,
-    summary="Cria uma ordem de insumo.",
+    summary="Cria uma ordem de item.",
 )
 def criar_ordem(
     criar_ordem: CriarOrdemRequest,
@@ -100,6 +100,59 @@ def criar_ordem(
     """
 
     servico.criar_ordem(criar_ordem=criar_ordem, auth=auth)
+
+
+@app.delete(
+    "/ordens/{id_ordem}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Apagar ordem através do ID",
+)
+def deletar_ordem(
+    id_ordem: int,
+    auth: Optional[bool] = False,
+    servico: OrdemServico = Depends(get_ordem_servico),
+) -> None:
+    """Apaga uma ordem
+
+    **Args**:
+        **id_ordem** (int):
+            ID da ordem requisitada
+
+        **auth(Optional[bool])**:
+            Flag que diz se o user está autenticado ou não.
+
+    **Raises**:
+        - **ExcecaoNaoAutenticado**:
+            Usuario não autenticado.
+    """
+    return servico.deletar_ordem(id_ordem=id_ordem, auth=auth)
+
+@app.patch(
+    "/ordens",
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Atualiza uma ordem de item.",
+)
+def atualiza_ordem(
+    atualizar_ordem: AtualizaOrdemRequest,
+    auth: Optional[bool] = False,
+    servico: OrdemServico = Depends(get_ordem_servico),
+) -> None:
+    """Atualiza uma nova ordem.
+
+    **Args**:
+        - **atualizar_ordem** (AtualizaOrdemRequest):
+            Corpo da requisiçãao.
+        - **auth(Optional[bool])**:
+            Flag que diz se o user está autenticado ou não.
+
+    **Raises**:
+        - **ExcecaoRegraNegocio**:
+            Data validade não permitida.
+        - **ExcecaoNaoAutenticado**:
+            Usuario não autenticado.
+    """
+
+    servico.atualiza_ordem(atualizar_ordem=atualizar_ordem, auth=auth)
 
 
 @app.get(
