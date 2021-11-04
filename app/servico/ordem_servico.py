@@ -163,14 +163,14 @@ class OrdemServico:
         """
 
         if auth:
-          ordem = atualizar_ordem.instancia
+            ordem = atualizar_ordem.instancia
 
-          if atualizar_ordem.data_validade:
-              dia_atual = (datetime.utcnow() - timedelta(hours=3)).date()
-              if atualizar_ordem.data_validade < dia_atual:
-                  raise ExcecaoRegraNegocio(msg="Data validade menor que a data atual.")
+            if atualizar_ordem.data_validade:
+                dia_atual = (datetime.utcnow() - timedelta(hours=3)).date()
+                if atualizar_ordem.data_validade < dia_atual:
+                    raise ExcecaoRegraNegocio(msg="Data validade menor que a data atual.")
 
-          self.ordem_repositorio.atualiza_ordem(ordem=ordem)
+            self.ordem_repositorio.atualiza_ordem(ordem=ordem)
 
         else:
             raise ExcecaoNaoAutenticado
