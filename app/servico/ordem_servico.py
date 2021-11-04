@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from typing import List
 
-from app.api.request.ordem_request import CriarOrdemRequest
+from app.api.request.ordem_request import CriarOrdemRequest, AtualizaOrdemRequest
 from app.api.response.ordem_response import ListaOrdemResponse, VisualizaOrdemResponse
 from app.modelo.sqlite.ordem_modelo import Ordem
 from app.repositorio import OrdemRepositorio
@@ -114,9 +114,9 @@ class OrdemServico:
             dia_atual = (datetime.utcnow() - timedelta(hours=3)).date()
 
             ordem = criar_ordem.instancia
-
-            if ordem.data_validade < dia_atual:
-                raise ExcecaoRegraNegocio(msg="Data validade menor que a data atual.")
+            if ordem.data_validade:
+                if ordem.data_validade < dia_atual:
+                    raise ExcecaoRegraNegocio(msg="Data validade menor que a data atual.")
 
             ordem.data_publicacao = dia_atual
             ordem.status = StatusOrdemEnum.DISPONIVEL.value
@@ -124,6 +124,7 @@ class OrdemServico:
 
         else:
             raise ExcecaoNaoAutenticado
+
 
     def deletar_ordem(
         self,
@@ -135,12 +136,42 @@ class OrdemServico:
             id_ordem (int): ID da ordem requisitada
             auth(bool): Flag que diz se o user está autenticado ou não.
 
+        Raises:"""
+        if auth:
+
+            self.ordem_repositorio.deletar_ordem(id_ordem=id_ordem)
+        else:
+            raise ExcecaoNaoAutenticado
+
+
+
+    def atualiza_ordem(
+        self,
+        atualizar_ordem: AtualizaOrdemRequest,
+        auth: bool,
+    ):
+        """Atualizar uma ordem.
+
+        Args:
+            atualizar_ordem (AtualizaOrdemRequest): Dados que serão atualizados.
+            auth (bool): Flag de autenticação.
+
         Raises:
+            ExcecaoRegraNegocio: Data validade não permitida
+
             ExcecaoNaoAutenticado: Usuario não autenticado.
         """
 
         if auth:
-            self.ordem_repositorio.deletar_ordem(id_ordem=id_ordem)
+          ordem = atualizar_ordem.instancia
+
+          if atualizar_ordem.data_validade:
+              dia_atual = (datetime.utcnow() - timedelta(hours=3)).date()
+              if atualizar_ordem.data_validade < dia_atual:
+                  raise ExcecaoRegraNegocio(msg="Data validade menor que a data atual.")
+
+          self.ordem_repositorio.atualiza_ordem(ordem=ordem)
+
         else:
             raise ExcecaoNaoAutenticado
 
