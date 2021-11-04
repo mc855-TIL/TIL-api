@@ -63,7 +63,6 @@ class OrdemRepositorio:
         self,
         id_ordem: int,
     ) -> Ordem:
-
         consulta = (
             self.sessao.query(Ordem)
             .join(Usuario)
@@ -90,3 +89,34 @@ class OrdemRepositorio:
     ) -> None:
         with self.sessao.transaction:
             self.sessao.merge(ordem)
+
+    def atualiza_ordem(
+        self,
+        ordem: Ordem,
+    ) -> None:
+        # parametros =  [param for param in dir(ordem) if not param.startswith('__')
+        #                and (not param.startswith('_'))]
+        # parametros_nao_nulos = [getattr(ordem, p, None) for p in parametros if getattr(ordem, p, None)]
+        parametros_nomes = [
+            "id",
+            "item",
+            "descricao",
+            "tipo",
+            "data_validade",
+            "emprestimo",
+            "quantidade",
+            "id_usuario",
+        ]
+        parametros_nao_nulos = {p: getattr(ordem, p, None)
+                                for p in parametros_nomes
+                                if getattr(ordem, p, None)
+        }
+        # breakpoint()
+        print(parametros_nao_nulos)
+        with self.sessao.begin():
+            consulta = (self.sessao.query(Ordem))
+
+            consulta.filter_by(id=ordem.id) \
+            .update(parametros_nao_nulos)
+
+
