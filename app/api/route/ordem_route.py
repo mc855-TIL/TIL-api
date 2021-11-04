@@ -115,16 +115,14 @@ def atualiza_ordem(
     """Atualiza uma nova ordem.
 
     **Args**:
-        - **atualizar_ordem** (CriarOrdemRequest):
+        - **atualizar_ordem** (AtualizaOrdemRequest):
             Corpo da requisiçãao.
-
         - **auth(Optional[bool])**:
             Flag que diz se o user está autenticado ou não.
 
     **Raises**:
         - **ExcecaoRegraNegocio**:
             Data validade não permitida.
-
         - **ExcecaoNaoAutenticado**:
             Usuario não autenticado.
     """

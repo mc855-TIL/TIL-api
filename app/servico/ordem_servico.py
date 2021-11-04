@@ -130,7 +130,7 @@ class OrdemServico:
         atualizar_ordem: AtualizaOrdemRequest,
         auth: bool,
     ):
-        """Criar uma ordem.
+        """Atualizar uma ordem.
 
         Args:
             atualizar_ordem (AtualizaOrdemRequest): Dados que serão atualizados.
