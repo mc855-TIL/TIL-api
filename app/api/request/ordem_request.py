@@ -36,3 +36,30 @@ class CriarOrdemRequest(BaseRequest):
             quantidade=atributos.get("quantidade"),
             id_usuario=atributos.get("id_usuario"),
         )
+
+
+class AtualizaOrdemRequest(BaseRequest):
+    id: int
+    item: Optional [str]
+    descricao: Optional [str]
+    tipo: Optional [TipoOrdemEnum]
+    data_validade: Optional[date]
+    emprestimo: Optional [bool]
+    quantidade: Optional[str]
+    id_usuario: Optional [int]
+
+    @property
+    def instancia(self):
+
+        atributos = self.dict(exclude_unset=True)
+
+        return Ordem(
+            id=atributos.get("id"),
+            item=atributos.get("item"),
+            descricao=atributos.get("descricao"),
+            tipo=atributos.get("tipo").value,
+            data_validade=atributos.get("data_validade"),
+            emprestimo=atributos.get("emprestimo"),
+            quantidade=atributos.get("quantidade"),
+            id_usuario=atributos.get("id_usuario"),
+        )

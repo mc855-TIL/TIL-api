@@ -19,6 +19,10 @@ class ListaOrdemResponse(PaginacaoResponse):
     items: List[OrdemResponse] = Field(alias="itens")
 
 
+class ListaItemResponse(BaseResponse):
+    items: List[str]
+
+
 class VisualizaOrdemResponse(BaseResponse):
     id: int
     item: str
