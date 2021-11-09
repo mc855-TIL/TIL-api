@@ -4,6 +4,7 @@ from sqlalchemy.orm.exc import NoResultFound
 from starlette.middleware.cors import CORSMiddleware
 
 from app.api.route.ordem_route import app as ordem_app
+from app.api.route.negocio_route import app as negocio_app
 from app.utils.excecao import ExcecaoNaoAutenticado, ExcecaoRegraNegocio
 
 # from fastapi.exceptions import
@@ -41,3 +42,4 @@ def manipulador_nao_autenticado(request: Request, exc: ExcecaoNaoAutenticado):
 
 
 app.include_router(ordem_app, tags=["Ordens"])
+app.include_router(negocio_app, tags=["Negócios"])
