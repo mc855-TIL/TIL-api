@@ -30,3 +30,22 @@ class NegocioRepositorio:
             consulta.filter_by(id=negocio.id_ordem) \
             .update(parametros)
 
+    def listar_negocios(
+        self,
+        filtros: List[Any]
+    ) -> List[Row]:
+
+        consulta = (
+            self.sessao.query(Negocio)
+            .join(Usuario)
+            .join(Instituicao)
+            .with_entities(
+                Negocio.id,
+                Usuario.nome.label("nome_solicitante"),
+                Instituicao.nome.label("nome_instituicao"),
+            )
+            .filter(*filtros)
+        )
+
+        res = consulta.distinct().all()
+        return res

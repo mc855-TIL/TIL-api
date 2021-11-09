@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from typing import List
 
+from app.api.response.negocio_response import ListaNegocioResponse, NegocioResponse
 from app.api.request.negocio_request import CriarNegocioRequest
 from app.modelo.sqlite.negocio_modelo import Negocio
 from app.repositorio import NegocioRepositorio
@@ -37,6 +38,32 @@ class NegocioServico:
 
             self.negocio_repositorio.criar_negocio(negocio=negocio)
 
+        else:
+            raise ExcecaoNaoAutenticado
+
+    def listar_negocios(
+        self,
+        id_ordem: int,
+        auth: bool,
+    ) -> ListaNegocioResponse:
+        """Listagem das ordens de insumos
+
+        Args:
+            id_ordem (int): ID da ordem requisitada
+            auth(bool): Flag que diz se o user está autenticado ou não.
+        Returns:
+            ListaNegocioResponse: Listagem de ordens paginada
+        """
+        if auth:
+            filtros = []
+            filtros.append(Negocio.id_ordem == id_ordem)
+
+            negocios = self.negocio_repositorio.listar_negocios(filtros)
+            items = []
+            for i, negocio in enumerate(negocios):
+                items.append(NegocioResponse.parse_obj(negocio))
+            ret = ListaNegocioResponse(items=items)
+            return ret
         else:
             raise ExcecaoNaoAutenticado
 

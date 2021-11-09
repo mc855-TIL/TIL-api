@@ -152,7 +152,7 @@ class OrdemServico:
                 str_list.append(item[0])
 
             listItemResp = ListaItemResponse(items=str_list)
-            
+
             return listItemResp
         else:
             raise ExcecaoNaoAutenticado
