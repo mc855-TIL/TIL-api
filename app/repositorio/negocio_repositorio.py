@@ -21,14 +21,11 @@ class NegocioRepositorio:
         with self.sessao.begin():
             self.sessao.merge(negocio)
 
-            parametros = {"status": StatusOrdemEnum.EM_NEGOCIACAO.value
-            }
-
-
-            consulta = (self.sessao.query(Ordem))
-
-            consulta.filter_by(id=negocio.id_ordem) \
-            .update(parametros)
+            # parametros = {"status": StatusOrdemEnum.EM_NEGOCIACAO.value
+            # }
+            # consulta = (self.sessao.query(Ordem))
+            # consulta.filter_by(id=negocio.id_ordem) \
+            # .update(parametros)
 
     def listar_negocios(
         self,
@@ -70,3 +67,38 @@ class NegocioRepositorio:
                 self.sessao.query(Negocio)
             )
             consulta.filter_by(id=id_negocio).delete()
+
+    def atualiza_ordem(
+        self,
+        negocio: Negocio,
+    ) -> None:
+
+        parametros_nomes = [
+            "id",
+            "status",
+            "data_hora_resposta",
+        ]
+        parametros_nao_nulos = {p: getattr(negocio, p, None)
+                                for p in parametros_nomes
+                                if getattr(negocio, p, None)
+        }
+        print(parametros_nao_nulos)
+        with self.sessao.begin():
+            consulta = (self.sessao.query(Negocio))
+
+            consulta.filter_by(id=negocio.id) \
+            .update(parametros_nao_nulos)
+
+            consulta = (self.sessao.query(Negocio))
+
+            negres = consulta.filter_by(id=negocio.id) \
+            .one()
+            id_ordem = negres.id_ordem
+
+            parametros = {"status": StatusOrdemEnum.FINALIZADO.value
+            }
+            consulta = (self.sessao.query(Ordem))
+            consulta.filter_by(id=id_ordem) \
+            .update(parametros)
+
+

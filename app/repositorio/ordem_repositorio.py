@@ -122,9 +122,7 @@ class OrdemRepositorio:
         self,
         ordem: Ordem,
     ) -> None:
-        # parametros =  [param for param in dir(ordem) if not param.startswith('__')
-        #                and (not param.startswith('_'))]
-        # parametros_nao_nulos = [getattr(ordem, p, None) for p in parametros if getattr(ordem, p, None)]
+
         parametros_nomes = [
             "id",
             "item",
@@ -139,8 +137,6 @@ class OrdemRepositorio:
                                 for p in parametros_nomes
                                 if getattr(ordem, p, None)
         }
-        # breakpoint()
-        print(parametros_nao_nulos)
         with self.sessao.begin():
             consulta = (self.sessao.query(Ordem))
 

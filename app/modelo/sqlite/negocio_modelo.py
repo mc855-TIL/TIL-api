@@ -16,3 +16,6 @@ class Negocio(Base):
         sa.ForeignKey("usuario.id"),
         nullable=False,
     )
+    status = sa.Column(sa.String)
+    data_hora_criacao = sa.Column(sa.DateTime)
+    data_hora_resposta = sa.Column(sa.DateTime)

@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from typing import List
 
 from app.api.response.negocio_response import ListaNegocioResponse, NegocioResponse
-from app.api.request.negocio_request import CriarNegocioRequest
+from app.api.request.negocio_request import CriarNegocioRequest, AtualizaNegocioRequest
 from app.modelo.sqlite.negocio_modelo import Negocio
 from app.repositorio import NegocioRepositorio
 from app.utils.enums import *
@@ -35,6 +35,9 @@ class NegocioServico:
             # dia_atual = (datetime.utcnow() - timedelta(hours=3)).date()
 
             negocio = criar_negocio.instancia
+            negocio.status = "EM_NEGOCIACAO"
+            hora_atual = (datetime.utcnow() - timedelta(hours=3))
+            negocio.data_hora_criacao = hora_atual
 
             self.negocio_repositorio.criar_negocio(negocio=negocio)
 
@@ -99,3 +102,27 @@ class NegocioServico:
             self.negocio_repositorio.deletar_negocio(id_negocio=id_negocio)
         else:
             raise ExcecaoNaoAutenticado
+
+    def atualiza_negocio(
+        self,
+        atualizar_negocio: AtualizaNegocioRequest,
+        auth: bool,
+    ):
+        """Atualizar um negócio de uma ordem.
+
+        Args:
+            atualizar_negocio (AtualizaNegocioRequest): Dados que serão atualizados.
+            auth (bool): Flag de autenticação.
+
+        Raises:
+            ExcecaoNaoAutenticado: Usuario não autenticado.
+        """
+
+        if auth:
+            negocio = atualizar_negocio.instancia
+            hora_atual = (datetime.utcnow() - timedelta(hours=3))
+            negocio.data_hora_resposta = hora_atual
+            self.negocio_repositorio.atualiza_ordem(negocio=negocio)
+        else:
+            raise ExcecaoNaoAutenticado
+

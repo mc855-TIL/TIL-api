@@ -56,6 +56,9 @@ def upgrade():
         sa.Column("id_ordem", sa.Integer(), sa.ForeignKey("ordem.id"), nullable=False),
         sa.Column("id_solicitante", sa.Integer(), sa.ForeignKey("usuario.id"), nullable=False),
         sa.PrimaryKeyConstraint("id", name=op.f("pk_negocio")),
+        sa.Column("status", sa.String()),
+        sa.Column("data_hora_criacao", sa.DateTime()),
+        sa.Column("data_hora_resposta", sa.DateTime()),
     )
     # ### end Alembic commands ###
 

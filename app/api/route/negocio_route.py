@@ -1,7 +1,7 @@
 from typing import List, Optional
 
 from app.api.response.negocio_response import ListaNegocioResponse
-from app.api.request.negocio_request import CriarNegocioRequest
+from app.api.request.negocio_request import CriarNegocioRequest, AtualizaNegocioRequest
 from app.config.settings import settings
 from app.container import get_negocio_servico
 from app.servico import NegocioServico
@@ -117,3 +117,28 @@ def deletar_ordem(
             Usuario não autenticado.
     """
     return servico.deletar_negocio(id_negocio=id_negocio, auth=auth)
+
+@app.patch(
+    "/negocios",
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Atualiza um negócio de uma ordem de item.",
+)
+def atualiza_negocio(
+    atualizar_negocio: AtualizaNegocioRequest,
+    auth: Optional[bool] = False,
+    servico: NegocioServico = Depends(get_negocio_servico),
+) -> None:
+    """Atualiza um negócio de uma nova ordem.
+
+    **Args**:
+        - **atualizar_negocio** (AtualizaNegocioRequest):
+            Corpo da requisiçãao.
+        - **auth(Optional[bool])**:
+            Flag que diz se o user está autenticado ou não.
+
+    **Raises**:
+        - **ExcecaoNaoAutenticado**:
+            Usuario não autenticado.
+    """
+    servico.atualiza_negocio(atualizar_negocio=atualizar_negocio, auth=auth)
+

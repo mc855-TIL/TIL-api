@@ -19,5 +19,19 @@ class CriarNegocioRequest(BaseRequest):
         atributos = self.dict(exclude_unset=True)
 
         return Negocio(
-          **atributos
+            **atributos
+        )
+
+class AtualizaNegocioRequest(BaseRequest):
+    id: int
+    status: StatusNegocioEnum
+
+    @property
+    def instancia(self):
+
+        atributos = self.dict(exclude_unset=True)
+
+        return Negocio(
+            id=atributos.get("id"),
+            status=atributos.get("status").value,
         )
