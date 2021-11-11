@@ -67,3 +67,35 @@ class NegocioServico:
         else:
             raise ExcecaoNaoAutenticado
 
+    def deletar_todos_negocios_ordem(
+        self,
+        id_ordem: int,
+        auth: bool,
+    ):
+        """Apaga todos os negócios de uma ordem através do ID da ordem.
+        Args:
+            id_ordem (int): ID da ordem requisitada
+            auth(bool): Flag que diz se o user está autenticado ou não.
+
+        Raises:"""
+        if auth:
+            self.negocio_repositorio.deletar_todos_negocios_ordem(id_ordem=id_ordem)
+        else:
+            raise ExcecaoNaoAutenticado
+
+
+    def deletar_negocio(
+        self,
+        id_negocio: int,
+        auth: bool,
+    ):
+        """Apaga um negócio de uma ordem através do ID do negócio.
+        Args:
+            id_ordem (int): ID da ordem requisitada
+            auth(bool): Flag que diz se o user está autenticado ou não.
+
+        Raises:"""
+        if auth:
+            self.negocio_repositorio.deletar_negocio(id_negocio=id_negocio)
+        else:
+            raise ExcecaoNaoAutenticado

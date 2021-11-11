@@ -64,3 +64,56 @@ def criar_negocio(
     """
 
     servico.criar_negocio(criar_negocio=criar_negocio, auth=auth)
+
+
+@app.delete(
+    "/negocios/all/{id_ordem}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Apagar todos os negócios de uma ordem através do ID da ordem",
+)
+def deletar_todos_negocios_ordem(
+    id_ordem: int,
+    auth: Optional[bool] = False,
+    servico: NegocioServico = Depends(get_negocio_servico),
+) -> None:
+    """Apaga todos os negócios de uma ordem através do ID da ordem
+
+    **Args**:
+        **id_ordem** (int):
+            ID da ordem
+
+        **auth(Optional[bool])**:
+            Flag que diz se o user está autenticado ou não.
+
+    **Raises**:
+        - **ExcecaoNaoAutenticado**:
+            Usuario não autenticado.
+    """
+    return servico.deletar_todos_negocios_ordem(id_ordem=id_ordem, auth=auth)
+
+
+
+@app.delete(
+    "/negocios/{id_negocio}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Apagar um negócio de uma ordem através do ID do negócio",
+)
+def deletar_ordem(
+    id_negocio: int,
+    auth: Optional[bool] = False,
+    servico: NegocioServico = Depends(get_negocio_servico),
+) -> None:
+    """Apaga um negócio de uma ordem através do ID do negócio
+
+    **Args**:
+        **id_ordem** (int):
+            ID da ordem
+
+        **auth(Optional[bool])**:
+            Flag que diz se o user está autenticado ou não.
+
+    **Raises**:
+        - **ExcecaoNaoAutenticado**:
+            Usuario não autenticado.
+    """
+    return servico.deletar_negocio(id_negocio=id_negocio, auth=auth)

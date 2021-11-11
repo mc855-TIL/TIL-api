@@ -47,6 +47,7 @@ class AtualizaOrdemRequest(BaseRequest):
     emprestimo: Optional [bool]
     quantidade: Optional[str]
     id_usuario: Optional [int]
+    status: Optional[str]
 
     @property
     def instancia(self):
@@ -62,4 +63,5 @@ class AtualizaOrdemRequest(BaseRequest):
             emprestimo=atributos.get("emprestimo"),
             quantidade=atributos.get("quantidade"),
             id_usuario=atributos.get("id_usuario"),
+            status=atributos.get("status").value,
         )

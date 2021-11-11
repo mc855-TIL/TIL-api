@@ -170,7 +170,6 @@ class OrdemServico:
 
         Raises:"""
         if auth:
-
             self.ordem_repositorio.deletar_ordem(id_ordem=id_ordem)
         else:
             raise ExcecaoNaoAutenticado

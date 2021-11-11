@@ -49,3 +49,24 @@ class NegocioRepositorio:
 
         res = consulta.distinct().all()
         return res
+
+    def deletar_todos_negocios_ordem(
+        self,
+        id_ordem: int,
+    ) -> None:
+        with self.sessao.begin():
+            consulta = (
+                self.sessao.query(Negocio)
+            )
+            consulta.filter_by(id_ordem=id_ordem).delete()
+
+
+    def deletar_negocio(
+        self,
+        id_negocio: int,
+    ) -> None:
+        with self.sessao.begin():
+            consulta = (
+                self.sessao.query(Negocio)
+            )
+            consulta.filter_by(id=id_negocio).delete()
