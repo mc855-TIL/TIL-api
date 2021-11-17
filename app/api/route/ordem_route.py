@@ -35,33 +35,28 @@ def listar_ordens(
     """Listagem de ordens.
 
     **Args**:
-
-        - **pesquisa** (Optional[str]):
+       - **pesquisa** (Optional[str]):
             Pesquisa de item.
 
-        - **acao** (Optional[AcaoOrdemEnum]):
+       - **acao** (Optional[AcaoOrdemEnum]):
             Oferta/Pedido.
-
-        - **nomeInst** (Optional[str]):
+       - **nomeInst** (Optional[str]):
             Filtra pelo nome da instituição.
-
-        - **tipo** (Optional[List[TipoOrdemEnum]], optional):
+       - **tipo** (Optional[List[TipoOrdemEnum]], optional):
             Filtra pelo tipo de ordem (Insumo/Livro).
-
-        - **area_conhecimento** (Optional[List[AreaConhecimentoEnum]], optional):
+       - **area_conhecimento** (Optional[List[AreaConhecimentoEnum]], optional):
             Filtra pela área de conhecimento.
-
-        - **emprestimo** (Optional[bool], optional):
+       - **emprestimo** (Optional[bool], optional):
             Filtra se a ordem é um emprestimo.
 
-        - **pagina** (Optional[int], optional):
+       - **pagina** (Optional[int], optional):
             Numero da página de dados.
 
         - **limite** (Optional[int], optional):
             Quantidade de ordens por página.
 
     **Returns**:
-        - **ListaOrdemResponse**:
+       - **ListaOrdemResponse**:
             Modelo de resposta.
     """
     return servico.listar_ordens(
@@ -89,14 +84,14 @@ def criar_ordem(
     """Criar uma nova ordem.
 
     **Args**:
-        - **criar_ordem** (CriarOrdemRequest):
+       - **criar_ordem** (CriarOrdemRequest):
             Corpo da requisiçãao.
 
         - **auth(Optional[bool])**:
             Flag que diz se o user está autenticado ou não.
 
     **Raises**:
-        - **ExcecaoRegraNegocio**:
+       - **ExcecaoRegraNegocio**:
             Data validade não permitida.
 
         - **ExcecaoNaoAutenticado**:
@@ -119,14 +114,14 @@ def deletar_ordem(
     """Apaga uma ordem
 
     **Args**:
-        **id_ordem** (int):
+       - **id_ordem** (int):
             ID da ordem requisitada
 
-        **auth(Optional[bool])**:
+      - **auth(Optional[bool])**:
             Flag que diz se o user está autenticado ou não.
 
     **Raises**:
-        - **ExcecaoNaoAutenticado**:
+       - **ExcecaoNaoAutenticado**:
             Usuario não autenticado.
     """
     return servico.deletar_ordem(id_ordem=id_ordem, auth=auth)
@@ -146,14 +141,14 @@ def atualiza_ordem(
 
     **Args**:
 
-        - **atualizar_ordem** (AtualizaOrdemRequest):
+       - **atualizar_ordem** (AtualizaOrdemRequest):
             Corpo da requisiçãao.
         - **auth(Optional[bool])**:
             Flag que diz se o user está autenticado ou não.
 
     **Raises**:
 
-        - **ExcecaoRegraNegocio**:
+       - **ExcecaoRegraNegocio**:
             Data validade não permitida.
         - **ExcecaoNaoAutenticado**:
             Usuario não autenticado.
@@ -177,7 +172,7 @@ def pesquisar_nome_item(
 
     **Args**:
 
-        **nome_item** (str):
+      - **nome_item** (str):
             ID da ordem requisitada
 
         **auth(Optional[bool])**:
@@ -185,12 +180,12 @@ def pesquisar_nome_item(
 
     **Returns**:
 
-         **ListaItemResponse**:
+       - **ListaItemResponse**:
             Modelo de resposta.
 
     **Raises**:
 
-        - **ExcecaoNaoAutenticado**:
+       - **ExcecaoNaoAutenticado**:
             Usuario não autenticado.
     """
     return servico.pesquisar_nome_item(nome_item=nome_item, auth=auth)

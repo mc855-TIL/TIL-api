@@ -57,13 +57,13 @@ def criar_negocio(
     """Criar uma nova negociação de um item em anúncio.
 
     **Args**:
-        - **criar_negocio** (CriarNegocioRequest):
+       - **criar_negocio** (CriarNegocioRequest):
             Corpo da requisiçãao.
         - **auth(Optional[bool])**:
             Flag que diz se o user está autenticado ou não.
 
     **Raises**:
-        - **ExcecaoNaoAutenticado**:
+       - **ExcecaoNaoAutenticado**:
             Usuario não autenticado.
     """
 
@@ -83,11 +83,11 @@ def deletar_todos_negocios_ordem(
     """Apaga todos os negócios de uma ordem através do ID da ordem
 
     **Args**:
-        - **id_ordem** (int): ID da ordem
+       - **id_ordem** (int): ID da ordem
         - **auth(Optional[bool])**: Flag que diz se o user está autenticado ou não.
 
     **Raises**:
-        - **ExcecaoNaoAutenticado**:
+       - **ExcecaoNaoAutenticado**:
             Usuario não autenticado.
     """
     return servico.deletar_todos_negocios_ordem(id_ordem=id_ordem, auth=auth)
@@ -106,13 +106,13 @@ def deletar_negocio(
     """Apaga um negócio de uma ordem através do ID do negócio
 
     **Args**:
-        - **id_ordem** (int):
+       - **id_ordem** (int):
             ID da ordem
         - **auth(Optional[bool])**:
             Flag que diz se o user está autenticado ou não.
 
     **Raises**:
-        - **ExcecaoNaoAutenticado**:
+       - **ExcecaoNaoAutenticado**:
             Usuario não autenticado.
     """
     return servico.deletar_negocio(id_negocio=id_negocio, auth=auth)
@@ -131,41 +131,13 @@ def atualiza_negocio(
     """Atualiza um negócio de uma nova ordem.
 
     **Args**:
-        - **atualizar_negocio** (AtualizaNegocioRequest):
+       - **atualizar_negocio** (AtualizaNegocioRequest):
             Corpo da requisiçãao.
-        - **auth(Optional[bool])**:
+       - **auth(Optional[bool])**:
             Flag que diz se o user está autenticado ou não.
 
     **Raises**:
-        - **ExcecaoNaoAutenticado**:
+       - **ExcecaoNaoAutenticado**:
             Usuario não autenticado.
     """
     servico.atualiza_negocio(atualizar_negocio=atualizar_negocio, auth=auth)
-
-
-# @app.get(
-#     "/negocios/all/user/{id_user}",
-#     response_model=ListaNegocioResponse,
-#     summary="Lista de solicitações do usuário.",
-# )
-# def listar_todas_solicitacoes(
-#     id_user: int,
-#     auth: Optional[bool] = False,
-#     servico: NegocioServico = Depends(get_negocio_servico),
-# ) -> ListaNegocioResponse:
-#     """Listagem de ordens.
-#     **Args**:
-#        **id_user** (int):
-#             ID do usuário que realizou solicitações
-#        **auth(Optional[bool])**:
-#             Flag que diz se o user está autenticado ou não.
-#     **Returns**:
-#         - **ListaNegocioResponse**:
-#             Modelo de resposta.
-#     **Raises**:
-#         - **ExcecaoNaoAutenticado**:
-#             Usuario não autenticado.
-#     """
-#     return servico.listar_todas_solicitacoes(
-#         id_user, auth,
-#     )
