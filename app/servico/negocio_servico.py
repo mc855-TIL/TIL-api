@@ -79,6 +79,11 @@ class NegocioServico:
                 for i, negocio in enumerate(negocios):
                     items.append(NegocioResponse.parse_obj(negocio))
                 ret = ListaNegocioResponse(items=items)
+            elif modo == ModoListaNegocios.NEGOCIO:
+                negocio = self.negocio_repositorio.visualizar_negocio(id_negocio=id)
+                negocio_response = NegocioResponse.from_orm(negocio)
+                items = [negocio_response]
+                ret = ListaNegocioResponse(items=items)
 
             return ret
         else:
@@ -139,29 +144,3 @@ class NegocioServico:
             self.ordem_repositorio.atualiza_ordem_status(id_negocio=negocio.id)
         else:
             raise ExcecaoNaoAutenticado
-
-    # def listar_todas_solicitacoes(
-    #     self,
-    #     id_user: int,
-    #     auth: bool,
-    # ) -> ListaNegocioResponse:
-    #     """Listagem das ordens de insumos
-
-    #     Args:
-    #         id_ordem (int): ID da ordem requisitada
-    #         auth(bool): Flag que diz se o user está autenticado ou não.
-    #     Returns:
-    #         ListaNegocioResponse: Listagem de ordens paginada
-    #     """
-    #     if auth:
-    #         filtros = []
-    #         filtros.append(Negocio.id_ordem == id_ordem)
-
-    #         negocios = self.negocio_repositorio.listar_negocios(filtros)
-    #         items = []
-    #         for i, negocio in enumerate(negocios):
-    #             items.append(NegocioResponse.parse_obj(negocio))
-    #         ret = ListaNegocioResponse(items=items)
-    #         return ret
-    #     else:
-    #         raise ExcecaoNaoAutenticado

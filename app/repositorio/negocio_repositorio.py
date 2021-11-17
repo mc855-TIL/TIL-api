@@ -96,3 +96,28 @@ class NegocioRepositorio:
 
         res = consulta.distinct().all()
         return res
+
+
+    def visualizar_negocio(
+        self,
+        id_negocio: int,
+    ) -> Negocio:
+        consulta = (
+            self.sessao.query(Negocio)
+            .join(Ordem)
+            .join(Usuario)
+            .join(Instituicao)
+            .with_entities(
+                Negocio.id,
+                Ordem.item.label("nome_ordem"),
+                Usuario.nome.label("nome_solicitante"),
+                Usuario.email.label("email_solicitante"),
+                Usuario.contato.label("contato_solicitante"),
+                Instituicao.nome.label("nome_instituicao"),
+                Negocio.status,
+                Negocio.data_hora_criacao,
+                Negocio.data_hora_resposta,
+            )
+        )
+        return consulta.filter_by(id=id_negocio).one()
+
