@@ -28,7 +28,8 @@ class StatusNegocioEnum(Enum):
     EM_NEGOCIACAO = "EM_NEGOCIACAO"
     ATENDIDO = "ATENDIDO"
 
+
 class ModoListaNegocios(Enum):
     ORDEM = "ORDEM"
     NEGOCIO = "NEGOCIO"
-    USUARIO = "USUARIO"
+    MINHAS_SOLICITACOES = "MINHAS_SOLICITACOES"

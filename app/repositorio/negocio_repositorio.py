@@ -75,10 +75,10 @@ class NegocioRepositorio:
 
             consulta.filter_by(id=negocio.id).update(parametros_nao_nulos)
 
-    def listar_todas_solicitacoes(
+    def listar_todas_minhas_solicitacoes(
         self,
         filtros: List[Any],
-    )->List[Row]:
+    ) -> List[Row]:
 
         consulta = (
             self.sessao.query(Negocio)
@@ -96,7 +96,6 @@ class NegocioRepositorio:
 
         res = consulta.distinct().all()
         return res
-
 
     def visualizar_negocio(
         self,
@@ -120,4 +119,3 @@ class NegocioRepositorio:
             )
         )
         return consulta.filter_by(id=id_negocio).one()
-

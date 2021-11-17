@@ -22,6 +22,8 @@ def get_negocio_repo(sessao: Session = Depends(get_session)):
 
 def get_negocio_servico(
     negocio_repositorio: NegocioRepositorio = Depends(get_negocio_repo),
-    ordem_repositorio: OrdemRepositorio = Depends(get_ordem_repo)
+    ordem_repositorio: OrdemRepositorio = Depends(get_ordem_repo),
 ):
-    yield NegocioServico(negocio_repositorio=negocio_repositorio, ordem_repositorio=ordem_repositorio)
+    yield NegocioServico(
+        negocio_repositorio=negocio_repositorio, ordem_repositorio=ordem_repositorio
+    )

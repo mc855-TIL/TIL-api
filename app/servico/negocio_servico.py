@@ -14,7 +14,7 @@ class NegocioServico:
     def __init__(
         self,
         negocio_repositorio: NegocioRepositorio,
-        ordem_repositorio: OrdemRepositorio
+        ordem_repositorio: OrdemRepositorio,
     ) -> None:
         self.negocio_repositorio = negocio_repositorio
         self.ordem_repositorio = ordem_repositorio
@@ -65,16 +65,17 @@ class NegocioServico:
             if modo == ModoListaNegocios.ORDEM:
                 filtros = []
                 filtros.append(Negocio.id_ordem == id)
-
                 negocios = self.negocio_repositorio.listar_negocios(filtros)
                 items = []
                 for i, negocio in enumerate(negocios):
                     items.append(NegocioResponse.parse_obj(negocio))
                 ret = ListaNegocioResponse(items=items)
-            elif modo == ModoListaNegocios.USUARIO:
+            elif modo == ModoListaNegocios.MINHAS_SOLICITACOES:
                 filtros = []
                 filtros.append(Negocio.id_solicitante == id)
-                negocios = self.negocio_repositorio.listar_todas_solicitacoes(filtros)
+                negocios = self.negocio_repositorio.listar_todas_minhas_solicitacoes(
+                    filtros
+                )
                 items = []
                 for i, negocio in enumerate(negocios):
                     items.append(NegocioResponse.parse_obj(negocio))
