@@ -5,8 +5,8 @@ from app.modelo.sqlite.ordem_modelo import Ordem
 from app.modelo.sqlite.usuario_modelo import Usuario
 from app.utils.enums import *
 from paginate_sqlalchemy import SqlalchemyOrmPage
-from sqlalchemy.orm.session import Session
 from sqlalchemy.engine.row import Row
+from sqlalchemy.orm.session import Session
 
 
 class OrdemRepositorio:
@@ -93,7 +93,6 @@ class OrdemRepositorio:
 
     def pesquisar_nome_item(
         self,
-        nome_item: str,
         filtros: List[Any],
     ) -> List[Row]:
 
@@ -113,9 +112,7 @@ class OrdemRepositorio:
         id_ordem: int,
     ) -> None:
         with self.sessao.begin():
-            consulta = (
-                self.sessao.query(Ordem)
-            )
+            consulta = self.sessao.query(Ordem)
             consulta.filter_by(id=id_ordem).delete()
 
     def atualiza_ordem(
@@ -133,14 +130,12 @@ class OrdemRepositorio:
             "quantidade",
             "id_usuario",
         ]
-        parametros_nao_nulos = {p: getattr(ordem, p, None)
-                                for p in parametros_nomes
-                                if getattr(ordem, p, None)
+        parametros_nao_nulos = {
+            p: getattr(ordem, p, None)
+            for p in parametros_nomes
+            if getattr(ordem, p, None)
         }
         with self.sessao.begin():
-            consulta = (self.sessao.query(Ordem))
+            consulta = self.sessao.query(Ordem)
 
-            consulta.filter_by(id=ordem.id) \
-            .update(parametros_nao_nulos)
-
-
+            consulta.filter_by(id=ordem.id).update(parametros_nao_nulos)

@@ -1,8 +1,12 @@
 from datetime import datetime, timedelta
 from typing import List
 
-from app.api.response.ordem_response import ListaOrdemResponse, VisualizaOrdemResponse, ListaItemResponse
-from app.api.request.ordem_request import CriarOrdemRequest, AtualizaOrdemRequest
+from app.api.request.ordem_request import AtualizaOrdemRequest, CriarOrdemRequest
+from app.api.response.ordem_response import (
+    ListaItemResponse,
+    ListaOrdemResponse,
+    VisualizaOrdemResponse,
+)
 from app.modelo.sqlite.ordem_modelo import Ordem
 from app.repositorio import OrdemRepositorio
 from app.utils.enums import *
@@ -116,7 +120,9 @@ class OrdemServico:
             ordem = criar_ordem.instancia
             if ordem.data_validade:
                 if ordem.data_validade < dia_atual:
-                    raise ExcecaoRegraNegocio(msg="Data validade menor que a data atual.")
+                    raise ExcecaoRegraNegocio(
+                        msg="Data validade menor que a data atual."
+                    )
 
             ordem.data_publicacao = dia_atual
             ordem.status = StatusOrdemEnum.DISPONIVEL.value
@@ -130,7 +136,7 @@ class OrdemServico:
         nome_item: str,
         auth: bool,
     ) -> ListaItemResponse:
-        """Pesuisar nome de item.
+        """Pesquisar nome de item.
 
         Args:
             nome_item (str):Nome do item.
@@ -144,19 +150,13 @@ class OrdemServico:
             filtros.append(Ordem.item.ilike(f"%{nome_item}%"))
 
             resp = self.ordem_repositorio.pesquisar_nome_item(
-                nome_item=nome_item,
                 filtros=filtros,
             )
-            str_list =  []
-            for i, item in enumerate(resp):
-                str_list.append(item[0])
-
-            listItemResp = ListaItemResponse(items=str_list)
+            listItemResp = ListaItemResponse(items=[item[0] for item in resp])
 
             return listItemResp
         else:
             raise ExcecaoNaoAutenticado
-
 
     def deletar_ordem(
         self,
@@ -173,8 +173,6 @@ class OrdemServico:
             self.ordem_repositorio.deletar_ordem(id_ordem=id_ordem)
         else:
             raise ExcecaoNaoAutenticado
-
-
 
     def atualiza_ordem(
         self,
@@ -199,10 +197,11 @@ class OrdemServico:
             if atualizar_ordem.data_validade:
                 dia_atual = (datetime.utcnow() - timedelta(hours=3)).date()
                 if atualizar_ordem.data_validade < dia_atual:
-                    raise ExcecaoRegraNegocio(msg="Data validade menor que a data atual.")
+                    raise ExcecaoRegraNegocio(
+                        msg="Data validade menor que a data atual."
+                    )
 
             self.ordem_repositorio.atualiza_ordem(ordem=ordem)
 
         else:
             raise ExcecaoNaoAutenticado
-

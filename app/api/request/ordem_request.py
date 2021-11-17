@@ -40,13 +40,13 @@ class CriarOrdemRequest(BaseRequest):
 
 class AtualizaOrdemRequest(BaseRequest):
     id: int
-    item: Optional [str]
-    descricao: Optional [str]
-    tipo: Optional [TipoOrdemEnum]
+    item: Optional[str]
+    descricao: Optional[str]
+    tipo: Optional[TipoOrdemEnum]
     data_validade: Optional[date]
-    emprestimo: Optional [bool]
+    emprestimo: Optional[bool]
     quantidade: Optional[str]
-    id_usuario: Optional [int]
+    id_usuario: Optional[int]
     status: Optional[str]
 
     @property

@@ -18,9 +18,8 @@ class CriarNegocioRequest(BaseRequest):
 
         atributos = self.dict(exclude_unset=True)
 
-        return Negocio(
-            **atributos
-        )
+        return Negocio(**atributos)
+
 
 class AtualizaNegocioRequest(BaseRequest):
     id: int

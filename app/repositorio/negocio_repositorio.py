@@ -5,9 +5,8 @@ from app.modelo.sqlite.negocio_modelo import Negocio
 from app.modelo.sqlite.ordem_modelo import Ordem
 from app.modelo.sqlite.usuario_modelo import Usuario
 from app.utils.enums import *
-from paginate_sqlalchemy import SqlalchemyOrmPage
-from sqlalchemy.orm.session import Session
 from sqlalchemy.engine.row import Row
+from sqlalchemy.orm.session import Session
 
 
 class NegocioRepositorio:
@@ -21,16 +20,7 @@ class NegocioRepositorio:
         with self.sessao.begin():
             self.sessao.merge(negocio)
 
-            # parametros = {"status": StatusOrdemEnum.EM_NEGOCIACAO.value
-            # }
-            # consulta = (self.sessao.query(Ordem))
-            # consulta.filter_by(id=negocio.id_ordem) \
-            # .update(parametros)
-
-    def listar_negocios(
-        self,
-        filtros: List[Any]
-    ) -> List[Row]:
+    def listar_negocios(self, filtros: List[Any]) -> List[Row]:
 
         consulta = (
             self.sessao.query(Negocio)
@@ -52,20 +42,15 @@ class NegocioRepositorio:
         id_ordem: int,
     ) -> None:
         with self.sessao.begin():
-            consulta = (
-                self.sessao.query(Negocio)
-            )
+            consulta = self.sessao.query(Negocio)
             consulta.filter_by(id_ordem=id_ordem).delete()
-
 
     def deletar_negocio(
         self,
         id_negocio: int,
     ) -> None:
         with self.sessao.begin():
-            consulta = (
-                self.sessao.query(Negocio)
-            )
+            consulta = self.sessao.query(Negocio)
             consulta.filter_by(id=id_negocio).delete()
 
     def atualiza_ordem(
@@ -78,27 +63,22 @@ class NegocioRepositorio:
             "status",
             "data_hora_resposta",
         ]
-        parametros_nao_nulos = {p: getattr(negocio, p, None)
-                                for p in parametros_nomes
-                                if getattr(negocio, p, None)
+        parametros_nao_nulos = {
+            p: getattr(negocio, p, None)
+            for p in parametros_nomes
+            if getattr(negocio, p, None)
         }
-        print(parametros_nao_nulos)
+
         with self.sessao.begin():
-            consulta = (self.sessao.query(Negocio))
+            consulta = self.sessao.query(Negocio)
 
-            consulta.filter_by(id=negocio.id) \
-            .update(parametros_nao_nulos)
+            consulta.filter_by(id=negocio.id).update(parametros_nao_nulos)
 
-            consulta = (self.sessao.query(Negocio))
+            consulta = self.sessao.query(Negocio)
 
-            negres = consulta.filter_by(id=negocio.id) \
-            .one()
+            negres = consulta.filter_by(id=negocio.id).one()
             id_ordem = negres.id_ordem
 
-            parametros = {"status": StatusOrdemEnum.FINALIZADO.value
-            }
-            consulta = (self.sessao.query(Ordem))
-            consulta.filter_by(id=id_ordem) \
-            .update(parametros)
-
-
+            parametros = {"status": StatusOrdemEnum.FINALIZADO.value}
+            consulta = self.sessao.query(Ordem)
+            consulta.filter_by(id=id_ordem).update(parametros)

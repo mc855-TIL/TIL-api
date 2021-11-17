@@ -27,7 +27,10 @@ app.add_middleware(
 
 @app.exception_handler(NoResultFound)
 def manipulador_no_result_found(request: Request, exc: NoResultFound):
-    return JSONResponse(status_code=status.HTTP_404_NOT_FOUND, content={"mensagem": "Registro não encontrado"})
+    return JSONResponse(
+        status_code=status.HTTP_404_NOT_FOUND,
+        content={"mensagem": "Registro não encontrado"},
+    )
 
 
 @app.exception_handler(ExcecaoRegraNegocio)
@@ -38,7 +41,10 @@ def manipulador_regra_negocio(request: Request, exc: ExcecaoRegraNegocio):
 
 @app.exception_handler(ExcecaoNaoAutenticado)
 def manipulador_nao_autenticado(request: Request, exc: ExcecaoNaoAutenticado):
-    return JSONResponse(status_code=status.HTTP_401_UNAUTHORIZED, content={"msg": "Autenticação necessária."})
+    return JSONResponse(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        content={"msg": "Autenticação necessária."},
+    )
 
 
 app.include_router(ordem_app, tags=["Ordens"])

@@ -35,7 +35,8 @@ def listar_negocios(
             Usuario não autenticado.
     """
     return servico.listar_negocios(
-        id_ordem, auth,
+        id_ordem,
+        auth,
     )
 
 
@@ -92,7 +93,6 @@ def deletar_todos_negocios_ordem(
     return servico.deletar_todos_negocios_ordem(id_ordem=id_ordem, auth=auth)
 
 
-
 @app.delete(
     "/negocios/{id_negocio}",
     status_code=status.HTTP_204_NO_CONTENT,
@@ -118,6 +118,7 @@ def deletar_ordem(
     """
     return servico.deletar_negocio(id_negocio=id_negocio, auth=auth)
 
+
 @app.patch(
     "/negocios",
     status_code=status.HTTP_204_NO_CONTENT,
@@ -141,4 +142,3 @@ def atualiza_negocio(
             Usuario não autenticado.
     """
     servico.atualiza_negocio(atualizar_negocio=atualizar_negocio, auth=auth)
-

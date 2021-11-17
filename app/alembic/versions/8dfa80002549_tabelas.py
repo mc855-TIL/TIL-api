@@ -31,7 +31,9 @@ def upgrade():
         sa.Column("nome", sa.String(), nullable=True),
         sa.Column("email", sa.String(), nullable=True),
         sa.Column("contato", sa.String(), nullable=True),
-        sa.Column("id_inst", sa.Integer(), sa.ForeignKey("instituicao.id"), nullable=False),
+        sa.Column(
+            "id_inst", sa.Integer(), sa.ForeignKey("instituicao.id"), nullable=False
+        ),
         sa.PrimaryKeyConstraint("id", name=op.f("pk_usuario")),
     )
     op.create_table(
@@ -47,14 +49,18 @@ def upgrade():
         sa.Column("area_conhecimento", sa.String(), nullable=True),
         sa.Column("status", sa.String(), nullable=True, default="DISPONIVEL"),
         sa.Column("quantidade", sa.String(), nullable=True),
-        sa.Column("id_usuario", sa.Integer(), sa.ForeignKey("usuario.id"), nullable=False),
+        sa.Column(
+            "id_usuario", sa.Integer(), sa.ForeignKey("usuario.id"), nullable=False
+        ),
         sa.PrimaryKeyConstraint("id", name=op.f("pk_ordem")),
     )
     op.create_table(
         "negocio",
         sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
         sa.Column("id_ordem", sa.Integer(), sa.ForeignKey("ordem.id"), nullable=False),
-        sa.Column("id_solicitante", sa.Integer(), sa.ForeignKey("usuario.id"), nullable=False),
+        sa.Column(
+            "id_solicitante", sa.Integer(), sa.ForeignKey("usuario.id"), nullable=False
+        ),
         sa.PrimaryKeyConstraint("id", name=op.f("pk_negocio")),
         sa.Column("status", sa.String()),
         sa.Column("data_hora_criacao", sa.DateTime()),

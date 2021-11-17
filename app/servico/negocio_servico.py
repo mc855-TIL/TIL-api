@@ -36,7 +36,7 @@ class NegocioServico:
 
             negocio = criar_negocio.instancia
             negocio.status = "EM_NEGOCIACAO"
-            hora_atual = (datetime.utcnow() - timedelta(hours=3))
+            hora_atual = datetime.utcnow() - timedelta(hours=3)
             negocio.data_hora_criacao = hora_atual
 
             self.negocio_repositorio.criar_negocio(negocio=negocio)
@@ -86,7 +86,6 @@ class NegocioServico:
         else:
             raise ExcecaoNaoAutenticado
 
-
     def deletar_negocio(
         self,
         id_negocio: int,
@@ -120,9 +119,8 @@ class NegocioServico:
 
         if auth:
             negocio = atualizar_negocio.instancia
-            hora_atual = (datetime.utcnow() - timedelta(hours=3))
+            hora_atual = datetime.utcnow() - timedelta(hours=3)
             negocio.data_hora_resposta = hora_atual
             self.negocio_repositorio.atualiza_ordem(negocio=negocio)
         else:
             raise ExcecaoNaoAutenticado
-

@@ -13,4 +13,4 @@ class NegocioResponse(BaseResponse):
 
 
 class ListaNegocioResponse(BaseResponse):
-    items: List[NegocioResponse] 
+    items: List[NegocioResponse]
