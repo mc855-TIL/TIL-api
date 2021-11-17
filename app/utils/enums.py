@@ -20,5 +20,10 @@ class AcaoOrdemEnum(Enum):
 
 class StatusOrdemEnum(Enum):
     DISPONIVEL = "DISPONIVEL"
-    EM_NEGOCIACAO = "EM_NEGOCIACAO"
+    DESPUBLICADO = "DESPUBLICADO"
     FINALIZADO = "FINALIZADO"
+
+
+class StatusNegocioEnum(Enum):
+    EM_NEGOCIACAO = "EM_NEGOCIACAO"
+    ATENDIDO = "ATENDIDO"

@@ -1,7 +1,11 @@
 from typing import List, Optional
 
-from app.api.response.ordem_response import ListaOrdemResponse, VisualizaOrdemResponse, ListaItemResponse
-from app.api.request.ordem_request import CriarOrdemRequest, AtualizaOrdemRequest
+from app.api.request.ordem_request import AtualizaOrdemRequest, CriarOrdemRequest
+from app.api.response.ordem_response import (
+    ListaItemResponse,
+    ListaOrdemResponse,
+    VisualizaOrdemResponse,
+)
 from app.config.settings import settings
 from app.container import get_ordem_servico
 from app.servico import OrdemServico
@@ -127,6 +131,7 @@ def deletar_ordem(
     """
     return servico.deletar_ordem(id_ordem=id_ordem, auth=auth)
 
+
 @app.patch(
     "/ordens",
     status_code=status.HTTP_204_NO_CONTENT,
@@ -140,12 +145,14 @@ def atualiza_ordem(
     """Atualiza uma nova ordem.
 
     **Args**:
+
         - **atualizar_ordem** (AtualizaOrdemRequest):
             Corpo da requisiçãao.
         - **auth(Optional[bool])**:
             Flag que diz se o user está autenticado ou não.
 
     **Raises**:
+
         - **ExcecaoRegraNegocio**:
             Data validade não permitida.
         - **ExcecaoNaoAutenticado**:
@@ -177,10 +184,12 @@ def pesquisar_nome_item(
             Flag que diz se o user está autenticado ou não.
 
     **Returns**:
+
          **ListaItemResponse**:
             Modelo de resposta.
 
     **Raises**:
+
         - **ExcecaoNaoAutenticado**:
             Usuario não autenticado.
     """
@@ -214,4 +223,3 @@ def visualizar_ordem(
             Modelo de resposta.
     """
     return servico.visualizar_ordem(id_ordem=id_ordem, auth=auth)
-
