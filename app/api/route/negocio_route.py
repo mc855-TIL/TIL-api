@@ -142,3 +142,27 @@ def atualiza_negocio(
             Usuario não autenticado.
     """
     servico.atualiza_negocio(atualizar_negocio=atualizar_negocio, auth=auth)
+
+
+@app.get(
+    "/negocios/all/user/{id_user}",
+    response_model=ListaNegocioResponse,
+    summary="Lista de negocios de uma ordem.",
+)
+def listar_todas_solicitacoes(
+    auth: Optional[bool] = False,
+    servico: NegocioServico = Depends(get_negocio_servico),
+) -> ListaNegocioResponse:
+    """Listagem de ordens.
+    **Args**:
+       **id_ordem** (int):
+            ID da ordem requisitada
+       **auth(Optional[bool])**:
+            Flag que diz se o user está autenticado ou não.
+    **Raises**:
+        - **ExcecaoNaoAutenticado**:
+            Usuario não autenticado.
+    """
+    return servico.listar_negocios(
+        id_ordem, auth,
+    )
