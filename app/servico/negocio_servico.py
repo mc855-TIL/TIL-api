@@ -4,16 +4,20 @@ from typing import List
 from app.api.response.negocio_response import ListaNegocioResponse, NegocioResponse
 from app.api.request.negocio_request import CriarNegocioRequest, AtualizaNegocioRequest
 from app.modelo.sqlite.negocio_modelo import Negocio
-from app.repositorio import NegocioRepositorio
+from app.repositorio import NegocioRepositorio, OrdemRepositorio
 from app.utils.enums import *
 from app.utils.enums import StatusOrdemEnum
 from app.utils.excecao import ExcecaoNaoAutenticado, ExcecaoRegraNegocio
 
 
 class NegocioServico:
-    def __init__(self, negocio_repositorio: NegocioRepositorio) -> None:
+    def __init__(
+        self,
+        negocio_repositorio: NegocioRepositorio,
+        ordem_repositorio: OrdemRepositorio
+    ) -> None:
         self.negocio_repositorio = negocio_repositorio
-
+        self.ordem_repositorio = ordem_repositorio
     def criar_negocio(
         self,
         criar_negocio: CriarNegocioRequest,
@@ -31,9 +35,6 @@ class NegocioServico:
         """
 
         if auth:
-            # TODO: talvez criar um campo timestamp na tabela negocios
-            # dia_atual = (datetime.utcnow() - timedelta(hours=3)).date()
-
             negocio = criar_negocio.instancia
             negocio.status = "EM_NEGOCIACAO"
             hora_atual = datetime.utcnow() - timedelta(hours=3)
@@ -121,6 +122,7 @@ class NegocioServico:
             negocio = atualizar_negocio.instancia
             hora_atual = datetime.utcnow() - timedelta(hours=3)
             negocio.data_hora_resposta = hora_atual
-            self.negocio_repositorio.atualiza_ordem(negocio=negocio)
+            self.negocio_repositorio.atualiza_negocio(negocio=negocio)
+            self.ordem_repositorio.atualiza_ordem_status(id_negocio=negocio.id)
         else:
             raise ExcecaoNaoAutenticado

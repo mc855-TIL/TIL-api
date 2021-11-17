@@ -53,7 +53,7 @@ class NegocioRepositorio:
             consulta = self.sessao.query(Negocio)
             consulta.filter_by(id=id_negocio).delete()
 
-    def atualiza_ordem(
+    def atualiza_negocio(
         self,
         negocio: Negocio,
     ) -> None:
@@ -73,12 +73,3 @@ class NegocioRepositorio:
             consulta = self.sessao.query(Negocio)
 
             consulta.filter_by(id=negocio.id).update(parametros_nao_nulos)
-
-            consulta = self.sessao.query(Negocio)
-
-            negres = consulta.filter_by(id=negocio.id).one()
-            id_ordem = negres.id_ordem
-
-            parametros = {"status": StatusOrdemEnum.FINALIZADO.value}
-            consulta = self.sessao.query(Ordem)
-            consulta.filter_by(id=id_ordem).update(parametros)
