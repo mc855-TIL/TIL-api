@@ -28,6 +28,7 @@ class NegocioRepositorio:
             .join(Instituicao)
             .with_entities(
                 Negocio.id,
+                Negocio.status,
                 Usuario.nome.label("nome_solicitante"),
                 Instituicao.nome.label("nome_instituicao"),
             )
@@ -73,3 +74,25 @@ class NegocioRepositorio:
             consulta = self.sessao.query(Negocio)
 
             consulta.filter_by(id=negocio.id).update(parametros_nao_nulos)
+
+    def listar_todas_solicitacoes(
+        self,
+        filtros: List[Any],
+    )->List[Row]:
+
+        consulta = (
+            self.sessao.query(Negocio)
+            .join(Ordem)
+            .join(Usuario)
+            .join(Instituicao)
+            .with_entities(
+                Negocio.id,
+                Negocio.status,
+                Ordem.item.label("nome_ordem"),
+                Instituicao.nome.label("nome_instituicao"),
+            )
+            .filter(*filtros)
+        )
+
+        res = consulta.distinct().all()
+        return res

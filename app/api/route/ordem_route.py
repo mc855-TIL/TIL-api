@@ -165,7 +165,7 @@ def atualiza_ordem(
 @app.get(
     "/ordens/{nome_item}",
     response_model=ListaItemResponse,
-    summary="Pesuisa de nomes de item",
+    summary="Pesquisa de nomes de item",
 )
 def pesquisar_nome_item(
     nome_item: str,

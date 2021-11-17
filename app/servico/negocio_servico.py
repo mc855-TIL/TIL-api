@@ -18,6 +18,7 @@ class NegocioServico:
     ) -> None:
         self.negocio_repositorio = negocio_repositorio
         self.ordem_repositorio = ordem_repositorio
+
     def criar_negocio(
         self,
         criar_negocio: CriarNegocioRequest,
@@ -47,26 +48,38 @@ class NegocioServico:
 
     def listar_negocios(
         self,
-        id_ordem: int,
+        id: int,
+        modo: ModoListaNegocios,
         auth: bool,
     ) -> ListaNegocioResponse:
         """Listagem das ordens de insumos
 
         Args:
             id_ordem (int): ID da ordem requisitada
+            modo: modo de listagem
             auth(bool): Flag que diz se o user está autenticado ou não.
         Returns:
             ListaNegocioResponse: Listagem de ordens paginada
         """
         if auth:
-            filtros = []
-            filtros.append(Negocio.id_ordem == id_ordem)
+            if modo == ModoListaNegocios.ORDEM:
+                filtros = []
+                filtros.append(Negocio.id_ordem == id)
 
-            negocios = self.negocio_repositorio.listar_negocios(filtros)
-            items = []
-            for i, negocio in enumerate(negocios):
-                items.append(NegocioResponse.parse_obj(negocio))
-            ret = ListaNegocioResponse(items=items)
+                negocios = self.negocio_repositorio.listar_negocios(filtros)
+                items = []
+                for i, negocio in enumerate(negocios):
+                    items.append(NegocioResponse.parse_obj(negocio))
+                ret = ListaNegocioResponse(items=items)
+            elif modo == ModoListaNegocios.USUARIO:
+                filtros = []
+                filtros.append(Negocio.id_solicitante == id)
+                negocios = self.negocio_repositorio.listar_todas_solicitacoes(filtros)
+                items = []
+                for i, negocio in enumerate(negocios):
+                    items.append(NegocioResponse.parse_obj(negocio))
+                ret = ListaNegocioResponse(items=items)
+
             return ret
         else:
             raise ExcecaoNaoAutenticado
@@ -126,3 +139,29 @@ class NegocioServico:
             self.ordem_repositorio.atualiza_ordem_status(id_negocio=negocio.id)
         else:
             raise ExcecaoNaoAutenticado
+
+    # def listar_todas_solicitacoes(
+    #     self,
+    #     id_user: int,
+    #     auth: bool,
+    # ) -> ListaNegocioResponse:
+    #     """Listagem das ordens de insumos
+
+    #     Args:
+    #         id_ordem (int): ID da ordem requisitada
+    #         auth(bool): Flag que diz se o user está autenticado ou não.
+    #     Returns:
+    #         ListaNegocioResponse: Listagem de ordens paginada
+    #     """
+    #     if auth:
+    #         filtros = []
+    #         filtros.append(Negocio.id_ordem == id_ordem)
+
+    #         negocios = self.negocio_repositorio.listar_negocios(filtros)
+    #         items = []
+    #         for i, negocio in enumerate(negocios):
+    #             items.append(NegocioResponse.parse_obj(negocio))
+    #         ret = ListaNegocioResponse(items=items)
+    #         return ret
+    #     else:
+    #         raise ExcecaoNaoAutenticado
