@@ -9,19 +9,19 @@
 
 | Nome                     | Email                   |
 | ------------------------ | ------------------------|
-| Professora Juliana Borin | jufborin@unicamp.br     |
-| Assistente Paulo Kussler | paulo.kussler@gmail.com |
+| Professora Juliana Borin | jufborin [at] unicamp.br     |
+| Assistente Paulo Kussler | paulo.kussler [at] gmail.com |
 
 
 #### Equipe
 
 | Nome               | RA               | Email                  | ID Git                |
 | ------------------ | ---------------- | ---------------------- |---------------------- |
-| Filipe Cavalheiro Marques |      148524            | f148524@dac.unicamp.br                       |     @filipemarques33                  |
-| João Victor Flores da Costa   |   199818               |      j199818@dac.unicamp.br                  |    @JoaoFloresDev                   |
-| Leandro Nascimento |      171855            |          l171855@dac.unicamp.br              |       @leandrones                |
-| Leonardo Yukio Koike |    201332              | l201332@dac.unicamp.br                        |      @leokoike                 |
-| Lucas Silva Lopes do Carmo |    202110              |         l202110@dac.unicamp.br               |  @Locke23                     |
+| Filipe Cavalheiro Marques |      148524            | f148524 [at] dac.unicamp.br                       |     @filipemarques33                  |
+| João Victor Flores da Costa   |   199818               |      j199818 [at] dac.unicamp.br                  |    @JoaoFloresDev                   |
+| Leandro Nascimento |      171855            |          l171855 [at] dac.unicamp.br              |       @leandrones                |
+| Leonardo Yukio Koike |    201332              | l201332 [at] dac.unicamp.br                        |      @leokoike                 |
+| Lucas Silva Lopes do Carmo |    202110              |         l202110 [at] dac.unicamp.br               |  @Locke23                     |
 
 ### Descrição do projeto:
 
