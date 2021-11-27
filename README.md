@@ -30,12 +30,12 @@ Prova de conceito para melhorias da plataforma ["Solidariedade à Pesquisa"](htt
 Faculdade de Ciências Médicas (FCM) da Unicamp.
 
 
-#### Prints das telas com descrição das funcionalidades. 
-
-
-
-
-
+#### Tela do projeto API
+Abaixo estão imagens do projeto rodando:
+- A tela com todos os endpoints criados:
+![OpenAPI](imgs/api-openapi.png)
+- Exemplo de uma requisição:
+![exemplo-request](imgs/exemplo-request.png)
 
 #### Repositório da Professora Juliana no Gitlab do IC ou Zip com o projeto e todos artefatos para futuras evoluções dos projetos por outros alunos das turmas seguintes
 
@@ -48,6 +48,12 @@ Leonardo Koike RA: 201332
 make\
 python (versão 3.8 de preferência)\
 pip
+
+## Principais bibliotecas utilizadas no projeto:
+[fastapi](https://fastapi.tiangolo.com/)\
+[sqlalchemy](https://www.sqlalchemy.org/)\
+[alembic](https://alembic.sqlalchemy.org/)
+
 ## Instalação das bibliotecas
 No diretório root desse projeto, basta executar os seguintes comandos:
 
@@ -71,7 +77,7 @@ Para obter um banco de dados de teste:
 Para criar um novo banco de dados:
 - Execute o seguinte comando no diretório root do projeto:
 ```shell
-cd app & alembic upgrade head
+cd app/ & alembic upgrade head
 ```
 Esse comando irá criar um banco de dados novo na pasta root do projeto, caso não exista um banco de dados lá.
 
@@ -82,4 +88,33 @@ No seu prompt de comando ou terminal, basta executar os seguintes comandos:
 make run
 ```
 
-E acessar no browser o host: [http://localhost:8000/docs](http://localhost:8000/docs)
+Para envio das requests:
+- Acessar no browser o host: [http://localhost:8000/docs](http://localhost:8000/docs)
+- Com uma plataforma de API, criar suas requisições para url http://localhost:8000/
+
+
+## Plataforma de API
+Recomendamos utilizar o [Postman](https://www.postman.com/). Com isso é possível construir suas requests e verificar as respostas dos endpoints.\
+A seguir temos alguns exemplos:
+- Request para listagem de ordens
+![lista-ordens](imgs/postman-request-lista-ordens.png)
+- Request para saber os dados do negócio
+![dados-negocio](imgs/postman-request-dados-negocio.png)
+
+
+## Testes
+Ainda não foram implementados testes automatizados.
+
+## Criar e executar as migrations
+Para fazer alterações no banco de dados (adicionar novas tabelas e colunas), é preciso seguir os seguintes passos:
+- Criar uma migration executando o seguinte comando:
+```shell
+cd app/
+alembic revision --autogenerate -m 'adiciona_coluna_x_na_tabela_y'
+```
+
+- Com a migração criada, basta executar o seguinte comando para executá-la:
+```shell
+cd app/
+alembic upgrade head
+```
