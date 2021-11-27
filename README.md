@@ -7,21 +7,21 @@
 
 #### Professor e Assistente
 
-| Nome                     | Email                   |
-| ------------------------ | ------------------------|
+| Nome                     | Email                        |
+| ------------------------ | ---------------------------- |
 | Professora Juliana Borin | jufborin [at] unicamp.br     |
 | Assistente Paulo Kussler | paulo.kussler [at] gmail.com |
 
 
 #### Equipe
 
-| Nome               | RA               | Email                  | ID Git                |
-| ------------------ | ---------------- | ---------------------- |---------------------- |
-| Filipe Cavalheiro Marques |      148524            | f148524 [at] dac.unicamp.br                       |     @filipemarques33                  |
-| João Victor Flores da Costa   |   199818               |      j199818 [at] dac.unicamp.br                  |    @JoaoFloresDev                   |
-| Leandro Nascimento |      171855            |          l171855 [at] dac.unicamp.br              |       @leandrones                |
-| Leonardo Yukio Koike |    201332              | l201332 [at] dac.unicamp.br                        |      @leokoike                 |
-| Lucas Silva Lopes do Carmo |    202110              |         l202110 [at] dac.unicamp.br               |  @Locke23                     |
+| Nome                        | RA     | Email                       | ID Git           |
+| --------------------------- | ------ | --------------------------- | ---------------- |
+| Filipe Cavalheiro Marques   | 148524 | f148524 [at] dac.unicamp.br | @filipemarques33 |
+| João Victor Flores da Costa | 199818 | j199818 [at] dac.unicamp.br | @JoaoFloresDev   |
+| Leandro Nascimento          | 171855 | l171855 [at] dac.unicamp.br | @leandrones      |
+| Leonardo Yukio Koike        | 201332 | l201332 [at] dac.unicamp.br | @leokoike        |
+| Lucas Silva Lopes do Carmo  | 202110 | l202110 [at] dac.unicamp.br | @Locke23         |
 
 ### Descrição do projeto:
 
@@ -44,11 +44,11 @@ Faculdade de Ciências Médicas (FCM) da Unicamp.
 Leandro Nascimento RA: 171855\
 Leonardo Koike RA: 201332
 
-## Depende
+## Dependência do projeto
 make\
 python (versão 3.8 de preferência)\
 pip
-## Instalação
+## Instalação das bibliotecas
 No diretório root desse projeto, basta executar os seguintes comandos:
 
 ```python
@@ -60,10 +60,23 @@ pip install poetry
 poetry install
 ```
 
+## Banco de dados
+Para obter um banco de dados de teste:
+- entre no [link](https://drive.google.com/file/d/1vWXiHYSWDb6ZSaRwMMj3mNioY59UbNXF/view?usp=sharing) e faça o download do database.db para a pasta root do projeto.
+
+Para criar um novo banco de dados:
+- Execute o seguinte comando no diretório root do projeto:
+```shell
+    cd app & alembic upgrade head
+```
+    Esse comando irá criar um banco de dados novo na pasta root do projeto, caso não exista um banco de dados lá.
+
+Execute 
 ## Execução
 No seu prompt de comando ou terminal, basta executar os seguintes comandos:
 
-    export $(xargs <.env)\
+```shell
     make run
+```
 
 E acessar no browser o host: [http://localhost:8000/docs](http://localhost:8000/docs)
