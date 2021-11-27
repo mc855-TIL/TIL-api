@@ -136,3 +136,6 @@ dmypy.json
 
 # sqlite database
 *.db
+
+# ignore mc855 env
+mc855/
