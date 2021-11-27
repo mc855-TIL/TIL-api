@@ -15,7 +15,7 @@
 
 #### Equipe
 
-| Nome                        | RA     | Email                       | ID Git           |
+| Nome                        | RA     | Email                       | User Git         |
 | --------------------------- | ------ | --------------------------- | ---------------- |
 | Filipe Cavalheiro Marques   | 148524 | f148524 [at] dac.unicamp.br | @filipemarques33 |
 | João Victor Flores da Costa | 199818 | j199818 [at] dac.unicamp.br | @JoaoFloresDev   |
@@ -51,32 +51,35 @@ pip
 ## Instalação das bibliotecas
 No diretório root desse projeto, basta executar os seguintes comandos:
 
+- Criação e ativação da ambiente virtual
 ```python
-#criação e ativação da ambiente virtual
 python -m venv mc855 & source mc855/bin/activate
-#instalar o gerenciador de pacotes poetry
+```
+- Instalar o gerenciador de pacotes poetry
+```python
 pip install poetry
-#instalar os pacotes
+```
+- Instalar as bibliotecas utilizadas no projeto
+```python
 poetry install
 ```
 
 ## Banco de dados
 Para obter um banco de dados de teste:
-- entre no [link](https://drive.google.com/file/d/1vWXiHYSWDb6ZSaRwMMj3mNioY59UbNXF/view?usp=sharing) e faça o download do database.db para a pasta root do projeto.
+- faça o download do [database.db](https://drive.google.com/file/d/1vWXiHYSWDb6ZSaRwMMj3mNioY59UbNXF/view?usp=sharing) para a pasta root do projeto.
 
 Para criar um novo banco de dados:
 - Execute o seguinte comando no diretório root do projeto:
 ```shell
-    cd app & alembic upgrade head
+cd app & alembic upgrade head
 ```
-    Esse comando irá criar um banco de dados novo na pasta root do projeto, caso não exista um banco de dados lá.
+Esse comando irá criar um banco de dados novo na pasta root do projeto, caso não exista um banco de dados lá.
 
-Execute 
 ## Execução
 No seu prompt de comando ou terminal, basta executar os seguintes comandos:
 
 ```shell
-    make run
+make run
 ```
 
 E acessar no browser o host: [http://localhost:8000/docs](http://localhost:8000/docs)
