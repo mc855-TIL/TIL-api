@@ -12,7 +12,12 @@ class Ordem(Base):
     tipo = sa.Column(sa.String)
     data_publicacao = sa.Column(sa.Date)
     data_validade = sa.Column(sa.Date, nullable=True)
-    nomeInst = sa.Column(sa.String)
     emprestimo = sa.Column(sa.Boolean)
-    areaConhecimento = sa.Column(sa.String)
-    contato = sa.Column(sa.String)
+    area_conhecimento = sa.Column(sa.String)
+    status = sa.Column(sa.String)
+    quantidade = sa.Column(sa.String)
+    id_usuario = sa.Column(
+        sa.Integer,
+        sa.ForeignKey("usuario.id"),
+        nullable=False,
+    )
