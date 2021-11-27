@@ -22,11 +22,13 @@ class StatusOrdemEnum(Enum):
     DISPONIVEL = "DISPONIVEL"
     DESPUBLICADO = "DESPUBLICADO"
     FINALIZADO = "FINALIZADO"
+    APAGADO = "APAGADO"
 
 
 class StatusNegocioEnum(Enum):
     EM_NEGOCIACAO = "EM_NEGOCIACAO"
     ATENDIDO = "ATENDIDO"
+    CANCELADO = "CANCELADO"
 
 
 class ModoListaNegocios(Enum):

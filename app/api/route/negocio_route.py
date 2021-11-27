@@ -71,43 +71,24 @@ def criar_negocio(
 
 
 @app.delete(
-    "/negocios/all/{id_ordem}",
+    "/negocios/{id}",
     status_code=status.HTTP_204_NO_CONTENT,
-    summary="Apagar todos os negócios de uma ordem através do ID da ordem",
-)
-def deletar_todos_negocios_ordem(
-    id_ordem: int,
-    auth: Optional[bool] = False,
-    servico: NegocioServico = Depends(get_negocio_servico),
-) -> None:
-    """Apaga todos os negócios de uma ordem através do ID da ordem
-
-    **Args**:
-       - **id_ordem** (int): ID da ordem
-        - **auth(Optional[bool])**: Flag que diz se o user está autenticado ou não.
-
-    **Raises**:
-       - **ExcecaoNaoAutenticado**:
-            Usuario não autenticado.
-    """
-    return servico.deletar_todos_negocios_ordem(id_ordem=id_ordem, auth=auth)
-
-
-@app.delete(
-    "/negocios/{id_negocio}",
-    status_code=status.HTTP_204_NO_CONTENT,
-    summary="Apagar um negócio de uma ordem através do ID do negócio",
+    summary="Apagar um ou todos os negócios de uma ordem",
 )
 def deletar_negocio(
-    id_negocio: int,
+    id: int,
+    all: Optional[bool] = False,
     auth: Optional[bool] = False,
     servico: NegocioServico = Depends(get_negocio_servico),
 ) -> None:
-    """Apaga um negócio de uma ordem através do ID do negócio
+    """Apaga um negócio de uma ordem através do ID
+    do negócio ou todos através do ID da ordem
 
     **Args**:
-       - **id_ordem** (int):
-            ID da ordem
+       - **id** (int):
+            ID da ordem ou negócio
+        - **all** (Optional[bool])**:
+            Flag que diz se são todas os negócios de uma ordem
         - **auth(Optional[bool])**:
             Flag que diz se o user está autenticado ou não.
 
@@ -115,7 +96,7 @@ def deletar_negocio(
        - **ExcecaoNaoAutenticado**:
             Usuario não autenticado.
     """
-    return servico.deletar_negocio(id_negocio=id_negocio, auth=auth)
+    return servico.deletar_negocio(id=id, all=all, auth=auth)
 
 
 @app.patch(
