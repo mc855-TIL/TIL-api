@@ -28,6 +28,7 @@ class NegocioRepositorio:
             .join(Instituicao)
             .with_entities(
                 Negocio.id,
+                Negocio.status,
                 Usuario.nome.label("nome_solicitante"),
                 Instituicao.nome.label("nome_instituicao"),
             )
@@ -53,7 +54,7 @@ class NegocioRepositorio:
             consulta = self.sessao.query(Negocio)
             consulta.filter_by(id=id_negocio).delete()
 
-    def atualiza_ordem(
+    def atualiza_negocio(
         self,
         negocio: Negocio,
     ) -> None:
@@ -74,11 +75,47 @@ class NegocioRepositorio:
 
             consulta.filter_by(id=negocio.id).update(parametros_nao_nulos)
 
-            consulta = self.sessao.query(Negocio)
+    def listar_todas_minhas_solicitacoes(
+        self,
+        filtros: List[Any],
+    ) -> List[Row]:
 
-            negres = consulta.filter_by(id=negocio.id).one()
-            id_ordem = negres.id_ordem
+        consulta = (
+            self.sessao.query(Negocio)
+            .join(Ordem)
+            .join(Usuario)
+            .join(Instituicao)
+            .with_entities(
+                Negocio.id,
+                Negocio.status,
+                Ordem.item.label("nome_ordem"),
+                Instituicao.nome.label("nome_instituicao"),
+            )
+            .filter(*filtros)
+        )
 
-            parametros = {"status": StatusOrdemEnum.FINALIZADO.value}
-            consulta = self.sessao.query(Ordem)
-            consulta.filter_by(id=id_ordem).update(parametros)
+        res = consulta.distinct().all()
+        return res
+
+    def visualizar_negocio(
+        self,
+        id_negocio: int,
+    ) -> Negocio:
+        consulta = (
+            self.sessao.query(Negocio)
+            .join(Ordem)
+            .join(Usuario)
+            .join(Instituicao)
+            .with_entities(
+                Negocio.id,
+                Ordem.item.label("nome_ordem"),
+                Usuario.nome.label("nome_solicitante"),
+                Usuario.email.label("email_solicitante"),
+                Usuario.contato.label("contato_solicitante"),
+                Instituicao.nome.label("nome_instituicao"),
+                Negocio.status,
+                Negocio.data_hora_criacao,
+                Negocio.data_hora_resposta,
+            )
+        )
+        return consulta.filter_by(id=id_negocio).one()

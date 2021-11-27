@@ -2,6 +2,7 @@ from typing import Any, List
 
 from app.modelo.sqlite.instituicao_modelo import Instituicao
 from app.modelo.sqlite.ordem_modelo import Ordem
+from app.modelo.sqlite.negocio_modelo import Negocio
 from app.modelo.sqlite.usuario_modelo import Usuario
 from app.utils.enums import *
 from paginate_sqlalchemy import SqlalchemyOrmPage
@@ -139,3 +140,16 @@ class OrdemRepositorio:
             consulta = self.sessao.query(Ordem)
 
             consulta.filter_by(id=ordem.id).update(parametros_nao_nulos)
+
+    def atualiza_ordem_status(
+        self,
+        id_negocio,
+    ):
+        consulta = self.sessao.query(Negocio)
+
+        negocio = consulta.filter_by(id=id_negocio).one()
+        id_ordem = negocio.id_ordem
+
+        parametros = {"status": StatusOrdemEnum.FINALIZADO.value}
+        consulta = self.sessao.query(Ordem)
+        consulta.filter_by(id=id_ordem).update(parametros)
