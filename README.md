@@ -118,3 +118,11 @@ alembic revision --autogenerate -m 'adiciona_coluna_x_na_tabela_y'
 cd app/
 alembic upgrade head
 ```
+
+## Próximos passos
+Acreditamos que os próximos passos desse projeto esteja em:
+- Colocar a aplicação e o banco de dados em um ambiente da nuvem
+- Desenvolver um Dockerfile
+- Trocar o modelo de banco de dados para um Postgres
+- Desenvolver um sistema de autenticação ou integrar ao serviço de autenticação do utilizado pelo Solidariedade.
+- 
