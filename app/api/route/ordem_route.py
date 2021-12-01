@@ -1,11 +1,7 @@
 from typing import List, Optional
 
 from app.api.request.ordem_request import AtualizaOrdemRequest, CriarOrdemRequest
-from app.api.response.ordem_response import (
-    ListaItemResponse,
-    ListaOrdemResponse,
-    VisualizaOrdemResponse,
-)
+from app.api.response.ordem_response import ListaOrdemResponse, VisualizaOrdemResponse
 from app.config.settings import settings
 from app.container import get_ordem_servico
 from app.servico import OrdemServico
@@ -28,6 +24,7 @@ def listar_ordens(
     tipo: Optional[List[TipoOrdemEnum]] = Query([]),
     area_conhecimento: Optional[List[AreaConhecimentoEnum]] = Query([]),
     emprestimo: Optional[bool] = None,
+    ultimos: Optional[bool] = False,
     servico: OrdemServico = Depends(get_ordem_servico),
     pagina: Optional[int] = 1,
     limite: Optional[int] = settings.QUANTIDADE_PAGINA,
@@ -35,21 +32,22 @@ def listar_ordens(
     """Listagem de ordens.
 
     **Args**:
-       - **pesquisa** (Optional[str]):
+        - **pesquisa** (Optional[str]):
             Pesquisa de item.
 
-       - **acao** (Optional[AcaoOrdemEnum]):
+        - **acao** (Optional[AcaoOrdemEnum]):
             Oferta/Pedido.
-       - **nomeInst** (Optional[str]):
+        - **nomeInst** (Optional[str]):
             Filtra pelo nome da instituição.
-       - **tipo** (Optional[List[TipoOrdemEnum]], optional):
+        - **tipo** (Optional[List[TipoOrdemEnum]], optional):
             Filtra pelo tipo de ordem (Insumo/Livro).
-       - **area_conhecimento** (Optional[List[AreaConhecimentoEnum]], optional):
+        - **area_conhecimento** (Optional[List[AreaConhecimentoEnum]], optional):
             Filtra pela área de conhecimento.
-       - **emprestimo** (Optional[bool], optional):
+        - **emprestimo** (Optional[bool], optional):
             Filtra se a ordem é um emprestimo.
-
-       - **pagina** (Optional[int], optional):
+        - **ulitmos** (Optional[bool], optional):
+            Apresenta as ordens ordenadas pela data_publicação.
+        - **pagina** (Optional[int], optional):
             Numero da página de dados.
 
         - **limite** (Optional[int], optional):
@@ -66,6 +64,7 @@ def listar_ordens(
         tipo=tipo,
         area_conhecimento=area_conhecimento,
         emprestimo=emprestimo,
+        ultimos=ultimos,
         pagina=pagina,
         limite=limite,
     )
@@ -84,14 +83,14 @@ def criar_ordem(
     """Criar uma nova ordem.
 
     **Args**:
-       - **criar_ordem** (CriarOrdemRequest):
+        - **criar_ordem** (CriarOrdemRequest):
             Corpo da requisiçãao.
 
         - **auth(Optional[bool])**:
             Flag que diz se o user está autenticado ou não.
 
     **Raises**:
-       - **ExcecaoRegraNegocio**:
+        - **ExcecaoRegraNegocio**:
             Data validade não permitida.
 
         - **ExcecaoNaoAutenticado**:
@@ -114,14 +113,14 @@ def deletar_ordem(
     """Apaga uma ordem
 
     **Args**:
-       - **id_ordem** (int):
+        - **id_ordem** (int):
             ID da ordem requisitada
 
-      - **auth(Optional[bool])**:
+        - **auth(Optional[bool])**:
             Flag que diz se o user está autenticado ou não.
 
     **Raises**:
-       - **ExcecaoNaoAutenticado**:
+        - **ExcecaoNaoAutenticado**:
             Usuario não autenticado.
     """
     return servico.deletar_ordem(id_ordem=id_ordem, auth=auth)
@@ -141,54 +140,20 @@ def atualiza_ordem(
 
     **Args**:
 
-       - **atualizar_ordem** (AtualizaOrdemRequest):
+        - **atualizar_ordem** (AtualizaOrdemRequest):
             Corpo da requisiçãao.
         - **auth(Optional[bool])**:
             Flag que diz se o user está autenticado ou não.
 
     **Raises**:
 
-       - **ExcecaoRegraNegocio**:
+        - **ExcecaoRegraNegocio**:
             Data validade não permitida.
         - **ExcecaoNaoAutenticado**:
             Usuario não autenticado.
     """
 
     servico.atualiza_ordem(atualizar_ordem=atualizar_ordem, auth=auth)
-
-
-@app.get(
-    "/ordens/{nome_item}",
-    response_model=ListaItemResponse,
-    summary="Pesquisa de nomes de item",
-)
-def pesquisar_nome_item(
-    nome_item: str,
-    auth: Optional[bool] = False,
-    servico: OrdemServico = Depends(get_ordem_servico),
-) -> ListaItemResponse:
-    """
-    Pesquisa nome de ordens
-
-    **Args**:
-
-      - **nome_item** (str):
-            ID da ordem requisitada
-
-        **auth(Optional[bool])**:
-            Flag que diz se o user está autenticado ou não.
-
-    **Returns**:
-
-       - **ListaItemResponse**:
-            Modelo de resposta.
-
-    **Raises**:
-
-       - **ExcecaoNaoAutenticado**:
-            Usuario não autenticado.
-    """
-    return servico.pesquisar_nome_item(nome_item=nome_item, auth=auth)
 
 
 @app.get(
@@ -207,10 +172,10 @@ def visualizar_ordem(
 
     **Args**:
 
-        **id_ordem** (int):
+        - **id_ordem** (int):
             ID da ordem requisitada
 
-        **auth(Optional[bool])**:
+        - **auth(Optional[bool])**:
             Flag que diz se o user está autenticado ou não.
 
     **Returns**:

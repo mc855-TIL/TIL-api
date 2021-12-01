@@ -3,8 +3,8 @@ from fastapi.responses import JSONResponse
 from sqlalchemy.orm.exc import NoResultFound
 from starlette.middleware.cors import CORSMiddleware
 
-from app.api.route.ordem_route import app as ordem_app
 from app.api.route.negocio_route import app as negocio_app
+from app.api.route.ordem_route import app as ordem_app
 from app.utils.excecao import ExcecaoNaoAutenticado, ExcecaoRegraNegocio
 
 # from fastapi.exceptions import
@@ -12,7 +12,7 @@ from app.utils.excecao import ExcecaoNaoAutenticado, ExcecaoRegraNegocio
 app = FastAPI(
     title="Projeto MC855 - API Troca de insumos de laboratório.",
     description="API para realizar a troca de insumos de laboratório.",
-    version="1.0",
+    version="1.1",
 )
 
 app.add_middleware(

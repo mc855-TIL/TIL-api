@@ -2,11 +2,7 @@ from datetime import datetime, timedelta
 from typing import List
 
 from app.api.request.ordem_request import AtualizaOrdemRequest, CriarOrdemRequest
-from app.api.response.ordem_response import (
-    ListaItemResponse,
-    ListaOrdemResponse,
-    VisualizaOrdemResponse,
-)
+from app.api.response.ordem_response import ListaItemResponse, ListaOrdemResponse, VisualizaOrdemResponse
 from app.modelo.sqlite.ordem_modelo import Ordem
 from app.repositorio import OrdemRepositorio
 from app.utils.enums import *
@@ -26,6 +22,7 @@ class OrdemServico:
         tipo: List[TipoOrdemEnum],
         area_conhecimento: List[AreaConhecimentoEnum],
         emprestimo: bool,
+        ultimos: bool,
         pagina: int,
         limite: int,
     ) -> ListaOrdemResponse:
@@ -66,6 +63,7 @@ class OrdemServico:
 
         ordens = self.ordem_repositorio.listar_ordens(
             filtros=filtros,
+            ultimos=ultimos,
             pagina=pagina,
             limite=limite,
         )
@@ -120,9 +118,7 @@ class OrdemServico:
             ordem = criar_ordem.instancia
             if ordem.data_validade:
                 if ordem.data_validade < dia_atual:
-                    raise ExcecaoRegraNegocio(
-                        msg="Data validade menor que a data atual."
-                    )
+                    raise ExcecaoRegraNegocio(msg="Data validade menor que a data atual.")
 
             ordem.data_publicacao = dia_atual
             ordem.status = StatusOrdemEnum.DISPONIVEL.value
@@ -197,9 +193,7 @@ class OrdemServico:
             if atualizar_ordem.data_validade:
                 dia_atual = (datetime.utcnow() - timedelta(hours=3)).date()
                 if atualizar_ordem.data_validade < dia_atual:
-                    raise ExcecaoRegraNegocio(
-                        msg="Data validade menor que a data atual."
-                    )
+                    raise ExcecaoRegraNegocio(msg="Data validade menor que a data atual.")
 
             self.ordem_repositorio.atualiza_ordem(ordem=ordem)
 
