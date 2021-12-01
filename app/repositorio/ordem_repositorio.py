@@ -1,8 +1,8 @@
 from typing import Any, List
 
 from app.modelo.sqlite.instituicao_modelo import Instituicao
-from app.modelo.sqlite.ordem_modelo import Ordem
 from app.modelo.sqlite.negocio_modelo import Negocio
+from app.modelo.sqlite.ordem_modelo import Ordem
 from app.modelo.sqlite.usuario_modelo import Usuario
 from app.utils.enums import *
 from paginate_sqlalchemy import SqlalchemyOrmPage
@@ -17,6 +17,7 @@ class OrdemRepositorio:
     def listar_ordens(
         self,
         filtros: List[Any],
+        ordenacao: List[Any],
         pagina: int,
         limite: int,
     ) -> SqlalchemyOrmPage:
@@ -35,6 +36,9 @@ class OrdemRepositorio:
             )
             .filter(*filtros)
         )
+
+        if ordenacao:
+            consulta = consulta.order_by(*ordenacao)
 
         return SqlalchemyOrmPage(consulta, page=pagina, items_per_page=limite)
 
@@ -55,6 +59,7 @@ class OrdemRepositorio:
                 Ordem.emprestimo,
                 Ordem.data_publicacao,
                 Ordem.data_validade,
+                Ordem.quantidade,
                 Instituicao.nome.label("nome_instituicao"),
             )
         )
@@ -131,11 +136,7 @@ class OrdemRepositorio:
             "quantidade",
             "id_usuario",
         ]
-        parametros_nao_nulos = {
-            p: getattr(ordem, p, None)
-            for p in parametros_nomes
-            if getattr(ordem, p, None)
-        }
+        parametros_nao_nulos = {p: getattr(ordem, p, None) for p in parametros_nomes if getattr(ordem, p, None)}
         with self.sessao.begin():
             consulta = self.sessao.query(Ordem)
 
