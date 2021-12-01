@@ -41,7 +41,6 @@ class OrdemServico:
         """
 
         filtros = []
-        ordenacao = []
         if pesquisa:
             filtros.append(Ordem.item.ilike(f"%{pesquisa}%"))
 
@@ -62,12 +61,9 @@ class OrdemServico:
         if isinstance(emprestimo, bool):
             filtros.append(Ordem.emprestimo.is_(emprestimo))
 
-        if ultimos:
-            ordenacao.append(Ordem.data_publicacao.desc)
-
         ordens = self.ordem_repositorio.listar_ordens(
             filtros=filtros,
-            ordenacao=ordenacao,
+            ultimos=ultimos,
             pagina=pagina,
             limite=limite,
         )

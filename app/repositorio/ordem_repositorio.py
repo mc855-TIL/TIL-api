@@ -17,7 +17,7 @@ class OrdemRepositorio:
     def listar_ordens(
         self,
         filtros: List[Any],
-        ordenacao: List[Any],
+        ultimos: bool,
         pagina: int,
         limite: int,
     ) -> SqlalchemyOrmPage:
@@ -37,8 +37,8 @@ class OrdemRepositorio:
             .filter(*filtros)
         )
 
-        if ordenacao:
-            consulta = consulta.order_by(*ordenacao)
+        if ultimos:
+            consulta = consulta.order_by(Ordem.data_publicacao.desc())
 
         return SqlalchemyOrmPage(consulta, page=pagina, items_per_page=limite)
 
