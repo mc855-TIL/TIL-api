@@ -28,6 +28,7 @@ class VisualizaOrdemResponse(BaseResponse):
     item: str
     descricao: str
     acao: str
+    tipo: str
     nome_instituicao: str
     emprestimo: bool
     area_conhecimento: str

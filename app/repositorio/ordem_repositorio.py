@@ -78,6 +78,7 @@ class OrdemRepositorio:
                 Ordem.id,
                 Ordem.acao,
                 Ordem.item,
+                Ordem.tipo,
                 Ordem.descricao,
                 Ordem.area_conhecimento,
                 Ordem.emprestimo,
