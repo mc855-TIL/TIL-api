@@ -33,5 +33,8 @@ class VisualizaOrdemResponse(BaseResponse):
     area_conhecimento: str
     data_publicacao: date
     data_validade: Optional[date]
+    usuario_id: Optional[int]
+    nome: Optional[str]
+    email: Optional[str]
     contato: Optional[str]
     quantidade: Optional[str]
